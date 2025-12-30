@@ -40,24 +40,24 @@ serve(async (req) => {
     }
 
     console.log(`Processing image (size: ${(imageSize / 1024 / 1024).toFixed(2)}MB)`);
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
-    
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    const OPENAI_API_KEY = Deno.env.get("OPENAI_API_KEY");
+
+    if (!OPENAI_API_KEY) {
+      throw new Error("OPENAI_API_KEY is not configured");
     }
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
-            content: "You are a clothing classification expert. Analyze clothing items and provide both a category and a detailed description. Return a JSON object with 'category' (one of: Top, Bottom, Shoes, Dress, Outerwear, Accessory) and 'description' (a detailed description including style, formality level, occasions, colors, patterns, material if visible). Example: {\"category\": \"Top\", \"description\": \"Casual white cotton t-shirt, suitable for everyday wear, athletic activities, and relaxed occasions\"}"
+            content: "You are a clothing classification expert. Analyze clothing items and provide both a category and a detailed description. Return ONLY a JSON object with 'category' (one of: Top, Bottom, Shoes, Dress, Outerwear, Accessory) and 'description' (a detailed description including style, formality level, occasions, colors, patterns, material if visible). Example: {\"category\": \"Top\", \"description\": \"Casual white cotton t-shirt, suitable for everyday wear, athletic activities, and relaxed occasions\"}"
           },
           {
             role: "user",
@@ -75,6 +75,7 @@ serve(async (req) => {
             ]
           }
         ],
+        max_tokens: 300,
       }),
     });
 
