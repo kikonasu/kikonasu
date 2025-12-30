@@ -47,15 +47,23 @@ export type Database = {
           total_outfits: number
           updated_at: string
           user_id: string
+          description: string | null
+          season: string | null
+          style: string | null
+          is_public: boolean | null
         }
         Insert: {
           created_at?: string
           id?: string
-          item_ids: string[]
+          item_ids?: string[]
           name: string
           total_outfits?: number
           updated_at?: string
           user_id: string
+          description?: string | null
+          season?: string | null
+          style?: string | null
+          is_public?: boolean | null
         }
         Update: {
           created_at?: string
@@ -65,6 +73,10 @@ export type Database = {
           total_outfits?: number
           updated_at?: string
           user_id?: string
+          description?: string | null
+          season?: string | null
+          style?: string | null
+          is_public?: boolean | null
         }
         Relationships: []
       }
@@ -133,6 +145,9 @@ export type Database = {
           shoes_item_id: string | null
           top_item_id: string | null
           user_id: string
+          name: string | null
+          occasion: string | null
+          tags: string[] | null
         }
         Insert: {
           accessory_item_id?: string | null
@@ -144,6 +159,9 @@ export type Database = {
           shoes_item_id?: string | null
           top_item_id?: string | null
           user_id: string
+          name?: string | null
+          occasion?: string | null
+          tags?: string[] | null
         }
         Update: {
           accessory_item_id?: string | null
@@ -155,6 +173,9 @@ export type Database = {
           shoes_item_id?: string | null
           top_item_id?: string | null
           user_id?: string
+          name?: string | null
+          occasion?: string | null
+          tags?: string[] | null
         }
         Relationships: [
           {
@@ -191,6 +212,13 @@ export type Database = {
           shoes_item_id: string | null
           top_item_id: string | null
           user_id: string
+          occasion: string | null
+          weather_temp: number | null
+          weather_condition: string | null
+          was_worn: boolean | null
+          worn_at: string | null
+          rating: number | null
+          notes: string | null
         }
         Insert: {
           accessory_item_id?: string | null
@@ -202,6 +230,13 @@ export type Database = {
           shoes_item_id?: string | null
           top_item_id?: string | null
           user_id: string
+          occasion?: string | null
+          weather_temp?: number | null
+          weather_condition?: string | null
+          was_worn?: boolean | null
+          worn_at?: string | null
+          rating?: number | null
+          notes?: string | null
         }
         Update: {
           accessory_item_id?: string | null
@@ -213,6 +248,13 @@ export type Database = {
           shoes_item_id?: string | null
           top_item_id?: string | null
           user_id?: string
+          occasion?: string | null
+          weather_temp?: number | null
+          weather_condition?: string | null
+          was_worn?: boolean | null
+          worn_at?: string | null
+          rating?: number | null
+          notes?: string | null
         }
         Relationships: [
           {
@@ -246,14 +288,16 @@ export type Database = {
           name: string
           updated_at: string
           user_id: string
+          avatar_url: string | null
         }
         Insert: {
           created_at?: string
           email?: string | null
           id?: string
-          name: string
+          name?: string
           updated_at?: string
           user_id: string
+          avatar_url?: string | null
         }
         Update: {
           created_at?: string
@@ -262,6 +306,7 @@ export type Database = {
           name?: string
           updated_at?: string
           user_id?: string
+          avatar_url?: string | null
         }
         Relationships: []
       }
@@ -344,6 +389,9 @@ export type Database = {
           updated_at: string
           user_id: string
           weather_data: Json | null
+          notes: string | null
+          packing_list: Json | null
+          is_archived: boolean | null
         }
         Insert: {
           created_at?: string
@@ -358,6 +406,9 @@ export type Database = {
           updated_at?: string
           user_id: string
           weather_data?: Json | null
+          notes?: string | null
+          packing_list?: Json | null
+          is_archived?: boolean | null
         }
         Update: {
           created_at?: string
@@ -372,6 +423,9 @@ export type Database = {
           updated_at?: string
           user_id?: string
           weather_data?: Json | null
+          notes?: string | null
+          packing_list?: Json | null
+          is_archived?: boolean | null
         }
         Relationships: []
       }
@@ -504,6 +558,12 @@ export type Database = {
         Row: {
           ai_analysis: string | null
           category: string
+          color: string | null
+          brand: string | null
+          tags: string[] | null
+          is_favorite: boolean | null
+          wear_count: number | null
+          last_worn_at: string | null
           created_at: string
           id: string
           image_url: string
@@ -513,6 +573,12 @@ export type Database = {
         Insert: {
           ai_analysis?: string | null
           category: string
+          color?: string | null
+          brand?: string | null
+          tags?: string[] | null
+          is_favorite?: boolean | null
+          wear_count?: number | null
+          last_worn_at?: string | null
           created_at?: string
           id?: string
           image_url: string
@@ -522,6 +588,12 @@ export type Database = {
         Update: {
           ai_analysis?: string | null
           category?: string
+          color?: string | null
+          brand?: string | null
+          tags?: string[] | null
+          is_favorite?: boolean | null
+          wear_count?: number | null
+          last_worn_at?: string | null
           created_at?: string
           id?: string
           image_url?: string
@@ -540,6 +612,10 @@ export type Database = {
           image_url: string
           notes: string | null
           outfit_potential: number | null
+          price: number | null
+          priority: number | null
+          is_purchased: boolean | null
+          purchased_at: string | null
           updated_at: string
           user_id: string
         }
@@ -552,6 +628,10 @@ export type Database = {
           image_url: string
           notes?: string | null
           outfit_potential?: number | null
+          price?: number | null
+          priority?: number | null
+          is_purchased?: boolean | null
+          purchased_at?: string | null
           updated_at?: string
           user_id: string
         }
@@ -564,6 +644,10 @@ export type Database = {
           image_url?: string
           notes?: string | null
           outfit_potential?: number | null
+          price?: number | null
+          priority?: number | null
+          is_purchased?: boolean | null
+          purchased_at?: string | null
           updated_at?: string
           user_id?: string
         }
