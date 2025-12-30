@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiko Email Templates Preview</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #1a1a2e;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #D946EF 100%);
+      padding: 40px 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 16px;
+    }
+
+    .nav {
+      background-color: #16213e;
+      padding: 16px 20px;
+      position: sticky;
+      top: 120px;
+      z-index: 99;
+      border-bottom: 1px solid #0f3460;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .nav a {
+      color: #a78bfa;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: inline-block;
+      margin-right: 8px;
+    }
+
+    .nav a:hover {
+      background-color: #8B5CF6;
+      color: white;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .category {
+      margin-bottom: 60px;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #0f3460;
+    }
+
+    .category-icon {
+      font-size: 32px;
+      margin-right: 16px;
+    }
+
+    .category-title {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .category-count {
+      background-color: #8B5CF6;
+      color: white;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      margin-left: 12px;
+    }
+
+    .email-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 24px;
+    }
+
+    .email-card {
+      background-color: #16213e;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #0f3460;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .email-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(139, 92, 246, 0.2);
+    }
+
+    .email-meta {
+      padding: 16px 20px;
+      background-color: #0f3460;
+    }
+
+    .email-trigger-id {
+      font-family: monospace;
+      font-size: 11px;
+      color: #a78bfa;
+      background-color: rgba(139, 92, 246, 0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .email-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .email-subject {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .email-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-high { background-color: #dc2626; color: white; }
+    .badge-medium { background-color: #f59e0b; color: #78350f; }
+    .badge-low { background-color: #10b981; color: white; }
+    .badge-frequency { background-color: #3b82f6; color: white; }
+
+    .email-preview {
+      background-color: #f8f5f2;
+      padding: 16px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .email-frame {
+      background-color: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      font-size: 12px;
+    }
+
+    /* Email Component Styles */
+    .e-header {
+      background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #D946EF 100%);
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    .e-logo {
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .e-tagline {
+      font-size: 11px;
+      color: rgba(255,255,255,0.9);
+      margin-top: 2px;
+    }
+
+    .e-banner {
+      padding: 16px;
+      text-align: center;
+    }
+
+    .e-banner-trip { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+    .e-banner-week { background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%); }
+    .e-banner-weather { background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%); }
+    .e-banner-wardrobe { background: linear-gradient(135deg, #f97316 0%, #fb923c 100%); }
+    .e-banner-wishlist { background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%); }
+    .e-banner-reengagement { background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); }
+    .e-banner-milestone { background: linear-gradient(135deg, #10b981 0%, #34d399 100%); }
+    .e-banner-alert { background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); }
+
+    .e-banner-icon {
+      font-size: 28px;
+      margin-bottom: 4px;
+    }
+
+    .e-banner-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .e-banner-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.9);
+      margin-top: 2px;
+    }
+
+    .e-content {
+      padding: 20px 16px;
+    }
+
+    .e-greeting {
+      font-size: 16px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .e-text {
+      font-size: 12px;
+      color: #4a4a4a;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .e-highlight {
+      background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      border-left: 3px solid #8B5CF6;
+    }
+
+    .e-highlight-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: #7c3aed;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .e-highlight-content {
+      font-size: 13px;
+      color: #1a1a1a;
+    }
+
+    .e-weather {
+      background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .e-weather-icon {
+      font-size: 28px;
+      margin-right: 12px;
+    }
+
+    .e-weather-temp {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0369a1;
+    }
+
+    .e-weather-cond {
+      font-size: 11px;
+      color: #0284c7;
+    }
+
+    .e-outfit-grid {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .e-outfit-item {
+      text-align: center;
+    }
+
+    .e-outfit-img {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 4px;
+    }
+
+    .e-outfit-label {
+      font-size: 9px;
+      color: #6b7280;
+      text-transform: uppercase;
+    }
+
+    .e-stats {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0;
+    }
+
+    .e-stat {
+      flex: 1;
+      text-align: center;
+      background-color: #f9fafb;
+      border-radius: 8px;
+      padding: 12px 8px;
+    }
+
+    .e-stat-num {
+      font-size: 20px;
+      font-weight: 700;
+      color: #8B5CF6;
+    }
+
+    .e-stat-label {
+      font-size: 9px;
+      color: #6b7280;
+      text-transform: uppercase;
+    }
+
+    .e-cta {
+      background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+      color: white;
+      text-align: center;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      margin: 16px 0 8px;
+    }
+
+    .e-cta-secondary {
+      background-color: #f3f4f6;
+      color: #4b5563;
+      text-align: center;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .e-footer {
+      background-color: #f9fafb;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .e-footer-text {
+      font-size: 10px;
+      color: #9ca3af;
+    }
+
+    .e-footer-links {
+      margin: 8px 0;
+    }
+
+    .e-footer-link {
+      font-size: 10px;
+      color: #6b7280;
+      margin: 0 6px;
+    }
+
+    .e-progress {
+      background-color: #e5e7eb;
+      border-radius: 4px;
+      height: 6px;
+      margin: 8px 0;
+      overflow: hidden;
+    }
+
+    .e-progress-bar {
+      background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%);
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .e-list-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 11px;
+      color: #374151;
+    }
+
+    .e-list-icon {
+      margin-right: 8px;
+      font-size: 14px;
+    }
+
+    .e-alert {
+      background-color: #fef3c7;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 12px 0;
+      border-left: 3px solid #f59e0b;
+      font-size: 11px;
+      color: #92400e;
+    }
+
+    .e-success {
+      background-color: #d1fae5;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 12px 0;
+      border-left: 3px solid #10b981;
+      font-size: 11px;
+      color: #065f46;
+    }
+
+    .summary-section {
+      background-color: #16213e;
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 40px;
+    }
+
+    .summary-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+    }
+
+    .summary-item {
+      text-align: center;
+      padding: 20px;
+      background-color: #0f3460;
+      border-radius: 12px;
+    }
+
+    .summary-num {
+      font-size: 36px;
+      font-weight: 700;
+      color: #a78bfa;
+    }
+
+    .summary-label {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 768px) {
+      .email-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .category-header {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Kiko Email Templates</h1>
+    <p>Weekly Outfit Reminder Email System Preview</p>
+  </div>
+
+  <nav class="nav">
+    <a href="#summary">Summary</a>
+    <a href="#trip">Trip Emails</a>
+    <a href="#weekly">Weekly Planning</a>
+    <a href="#weather">Weather Alerts</a>
+    <a href="#wardrobe">Wardrobe</a>
+    <a href="#wishlist">Wishlist</a>
+    <a href="#reengagement">Re-engagement</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- Summary Section -->
+    <section id="summary" class="summary-section">
+      <h2 class="summary-title">Email System Overview</h2>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <div class="summary-num">17</div>
+          <div class="summary-label">Total Templates</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-num">6</div>
+          <div class="summary-label">Categories</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-num">5</div>
+          <div class="summary-label">High Priority</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-num">7</div>
+          <div class="summary-label">Medium Priority</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-num">5</div>
+          <div class="summary-label">Low Priority</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRIP EMAILS -->
+    <section id="trip" class="category">
+      <div class="category-header">
+        <span class="category-icon">&#9992;</span>
+        <h2 class="category-title">Trip/Suitcase Emails</h2>
+        <span class="category-count">5 templates</span>
+      </div>
+
+      <div class="email-grid">
+
+        <!-- Trip Upcoming Week -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">trip_upcoming_week</span>
+            <div class="email-name">Trip Coming Up (1 Week)</div>
+            <div class="email-subject">Subject: "{{tripName}} is 1 week away! Time to plan your outfits"</div>
+            <div class="email-badges">
+              <span class="badge badge-high">High Priority</span>
+              <span class="badge badge-frequency">Once</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Hey Sarah! Your trip is coming up</div>
+                <div class="e-text"><strong>Beach Vacation</strong> to <strong>Miami</strong> is just <strong>7 days away</strong>! Now's the perfect time to plan your outfits.</div>
+                <div class="e-highlight">
+                  <div class="e-highlight-title">Trip Details</div>
+                  <div class="e-highlight-content">
+                    <strong>Dates:</strong> Dec 20 - Dec 27<br>
+                    <strong>Duration:</strong> 7 days<br>
+                    <strong>Activities:</strong> Beach, Casual, Formal
+                  </div>
+                </div>
+                <div class="e-weather">
+                  <span class="e-weather-icon">&#9728;</span>
+                  <div>
+                    <div class="e-weather-temp">75°-82°</div>
+                    <div class="e-weather-cond">Expected weather in Miami</div>
+                  </div>
+                </div>
+                <div class="e-text"><strong>Your packing progress:</strong></div>
+                <div class="e-progress"><div class="e-progress-bar" style="width: 28%;"></div></div>
+                <div class="e-text" style="font-size: 11px; color: #6b7280;">2 of 7 days planned</div>
+                <div class="e-cta">Plan My Trip Outfits</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trip Upcoming 3 Days -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">trip_upcoming_3days</span>
+            <div class="email-name">Trip Reminder (3 Days)</div>
+            <div class="email-subject">Subject: "3 days until {{tripName}}! Final outfit check"</div>
+            <div class="email-badges">
+              <span class="badge badge-high">High Priority</span>
+              <span class="badge badge-frequency">Once</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-alert">
+                <div class="e-banner-text" style="color: #78350f;">3 Days To Go</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Final countdown, Sarah!</div>
+                <div class="e-text">Your trip to <strong>Miami</strong> is almost here! Let's make sure you've got everything planned.</div>
+                <div class="e-success">
+                  <strong>&#10003; All 7 days planned!</strong><br>
+                  You're all set for your trip
+                </div>
+                <div class="e-text"><strong>Updated weather forecast:</strong></div>
+                <div class="e-list-item"><span class="e-list-icon">&#9728;</span> Fri 12/20 - 78°/72° Sunny</div>
+                <div class="e-list-item"><span class="e-list-icon">&#9728;</span> Sat 12/21 - 80°/74° Sunny</div>
+                <div class="e-list-item"><span class="e-list-icon">&#127782;</span> Sun 12/22 - 76°/70° Cloudy</div>
+                <div class="e-cta">Review My Suitcase</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trip Tomorrow -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">trip_tomorrow</span>
+            <div class="email-name">Trip Tomorrow</div>
+            <div class="email-subject">Subject: "Tomorrow's the day! Here's your Day 1 outfit"</div>
+            <div class="email-badges">
+              <span class="badge badge-high">High Priority</span>
+              <span class="badge badge-frequency">Once</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-trip">
+                <div class="e-banner-icon">&#9992;</div>
+                <div class="e-banner-text">Tomorrow's the Day!</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Excited yet, Sarah?</div>
+                <div class="e-text">Your trip to <strong>Miami</strong> starts tomorrow! Here's your Day 1 outfit.</div>
+                <div class="e-highlight">
+                  <div class="e-highlight-title">Day 1 - December 20</div>
+                  <div class="e-outfit-grid">
+                    <div class="e-outfit-item">
+                      <div class="e-outfit-img">&#128085;</div>
+                      <div class="e-outfit-label">Top</div>
+                    </div>
+                    <div class="e-outfit-item">
+                      <div class="e-outfit-img">&#128086;</div>
+                      <div class="e-outfit-label">Bottom</div>
+                    </div>
+                    <div class="e-outfit-item">
+                      <div class="e-outfit-img">&#128095;</div>
+                      <div class="e-outfit-label">Shoes</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="e-weather">
+                  <span class="e-weather-icon">&#9728;</span>
+                  <div>
+                    <div class="e-weather-temp">78° / 72°</div>
+                    <div class="e-weather-cond">Sunny in Miami</div>
+                  </div>
+                </div>
+                <div class="e-cta">View Full Trip Plan</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trip Daily Outfit -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">trip_daily_outfit</span>
+            <div class="email-name">Daily Outfit Reminder</div>
+            <div class="email-subject">Subject: "Day 3 outfit for Miami"</div>
+            <div class="email-badges">
+              <span class="badge badge-high">High Priority</span>
+              <span class="badge badge-frequency">Daily</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header" style="padding: 16px;">
+                <div class="e-tagline" style="opacity: 0.8;">Beach Vacation</div>
+                <div style="font-size: 24px; font-weight: 700; color: white; margin: 4px 0;">Day 3 of 7</div>
+                <div class="e-tagline">December 22, 2024</div>
+              </div>
+              <div class="e-content">
+                <div class="e-weather">
+                  <span class="e-weather-icon">&#127774;</span>
+                  <div>
+                    <div class="e-weather-temp">82°</div>
+                    <div class="e-weather-cond">Partly Cloudy | High 84° Low 76°</div>
+                  </div>
+                </div>
+                <div class="e-greeting">Good morning, Sarah!</div>
+                <div class="e-text">Here's your planned outfit for today in Miami.<br><span style="color: #7c3aed;">Today's plan: Beach day + dinner</span></div>
+                <div style="background-color: #f9fafb; border-radius: 12px; padding: 16px; margin: 12px 0;">
+                  <div style="text-align: center; font-size: 11px; color: #374151; text-transform: uppercase; margin-bottom: 12px;">Today's Outfit</div>
+                  <div class="e-outfit-grid">
+                    <div class="e-outfit-item">
+                      <div class="e-outfit-img">&#128085;</div>
+                      <div class="e-outfit-label">Top</div>
+                    </div>
+                    <div class="e-outfit-item">
+                      <div class="e-outfit-img">&#128086;</div>
+                      <div class="e-outfit-label">Bottom</div>
+                    </div>
+                    <div class="e-outfit-item">
+                      <div class="e-outfit-img">&#128095;</div>
+                      <div class="e-outfit-label">Shoes</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="e-cta">View Full Trip</div>
+                <div class="e-cta-secondary">Change Today's Outfit</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trip Completed -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">trip_completed</span>
+            <div class="email-name">Post-Trip Summary</div>
+            <div class="email-subject">Subject: "Welcome back! How was Miami?"</div>
+            <div class="email-badges">
+              <span class="badge badge-medium">Medium Priority</span>
+              <span class="badge badge-frequency">Once</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);">
+                <div class="e-banner-icon">&#127968;</div>
+                <div style="font-size: 18px; font-weight: 600; color: white;">Welcome Back!</div>
+                <div class="e-tagline">Hope you had an amazing time in Miami</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">How was your trip, Sarah?</div>
+                <div class="e-text">Your <strong>Beach Vacation</strong> trip is complete! Here's a quick recap.</div>
+                <div class="e-stats">
+                  <div class="e-stat">
+                    <div class="e-stat-num">7</div>
+                    <div class="e-stat-label">Days</div>
+                  </div>
+                  <div class="e-stat">
+                    <div class="e-stat-num">7</div>
+                    <div class="e-stat-label">Outfits</div>
+                  </div>
+                  <div class="e-stat">
+                    <div class="e-stat-num">15</div>
+                    <div class="e-stat-label">Items Used</div>
+                  </div>
+                </div>
+                <div class="e-success">
+                  <strong>&#11088; Save your favorite outfits</strong><br>
+                  Did any outfits feel especially great? Save them to your favorites!
+                </div>
+                <div class="e-cta">Review Trip Outfits</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WEEKLY PLANNING EMAILS -->
+    <section id="weekly" class="category">
+      <div class="category-header">
+        <span class="category-icon">&#128197;</span>
+        <h2 class="category-title">Weekly Planning Emails</h2>
+        <span class="category-count">2 templates</span>
+      </div>
+
+      <div class="email-grid">
+
+        <!-- Week Start Planning -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">week_start_planning</span>
+            <div class="email-name">Plan Your Week</div>
+            <div class="email-subject">Subject: "Plan your week: Dec 16-22"</div>
+            <div class="email-badges">
+              <span class="badge badge-medium">Medium Priority</span>
+              <span class="badge badge-frequency">Weekly</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-week">
+                <div class="e-tagline" style="opacity: 0.8;">Week of</div>
+                <div class="e-banner-text">December 16-22</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Ready for a stylish week, Sarah?</div>
+                <div class="e-text">A few minutes of planning now means stress-free mornings all week.</div>
+                <div style="font-size: 11px; font-weight: 600; color: #374151; margin-bottom: 8px;">THIS WEEK'S WEATHER</div>
+                <div class="e-list-item"><span style="width: 50px; display: inline-block; font-weight: 600;">Mon</span> <span class="e-list-icon">&#9728;</span> 45°/38° Sunny</div>
+                <div class="e-list-item"><span style="width: 50px; display: inline-block; font-weight: 600;">Tue</span> <span class="e-list-icon">&#127782;</span> 42°/35° Cloudy</div>
+                <div class="e-list-item"><span style="width: 50px; display: inline-block; font-weight: 600;">Wed</span> <span class="e-list-icon">&#127783;</span> 40°/32° Rain</div>
+                <div class="e-list-item"><span style="width: 50px; display: inline-block; font-weight: 600;">Thu</span> <span class="e-list-icon">&#9728;</span> 48°/40° Sunny</div>
+                <div class="e-list-item"><span style="width: 50px; display: inline-block; font-weight: 600;">Fri</span> <span class="e-list-icon">&#9728;</span> 52°/42° Sunny</div>
+                <div class="e-highlight" style="background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%); border-left-color: #06b6d4;">
+                  <div class="e-highlight-title" style="color: #0e7490;">Weather Tip</div>
+                  <div class="e-highlight-content" style="font-size: 12px; color: #155e75;">Layer up early week, lighter by Friday. Keep an umbrella handy Wednesday.</div>
+                </div>
+                <div class="e-cta">Plan My Week</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Midweek Check -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">week_midweek_check</span>
+            <div class="email-name">Midweek Check-in</div>
+            <div class="email-subject">Subject: "Midweek outfit check: How's your week going?"</div>
+            <div class="email-badges">
+              <span class="badge badge-low">Low Priority</span>
+              <span class="badge badge-frequency">Weekly</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-alert">
+                <div class="e-banner-text" style="color: #78350f;">Midweek Check-in</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Happy Wednesday, Sarah!</div>
+                <div class="e-text">You're halfway through the week. Let's make sure you're set for the rest of it.</div>
+                <div style="font-size: 11px; font-weight: 600; color: #374151; margin-bottom: 8px;">REST OF THE WEEK</div>
+                <div class="e-list-item">
+                  <span style="width: 50px; display: inline-block; font-weight: 600;">Thu</span>
+                  <span class="e-list-icon">&#9728;</span> 48°/40°
+                  <span style="margin-left: auto; background-color: #fef3c7; color: #92400e; font-size: 10px; padding: 2px 6px; border-radius: 4px;">Open</span>
+                </div>
+                <div class="e-list-item">
+                  <span style="width: 50px; display: inline-block; font-weight: 600;">Fri</span>
+                  <span class="e-list-icon">&#9728;</span> 52°/42°
+                  <span style="margin-left: auto; background-color: #d1fae5; color: #065f46; font-size: 10px; padding: 2px 6px; border-radius: 4px;">Planned</span>
+                </div>
+                <div class="e-highlight" style="background-color: #f0fdf4; border-left-color: #22c55e;">
+                  <div class="e-highlight-title" style="color: #166534;">&#127774; Weekend is coming!</div>
+                  <div class="e-highlight-content" style="font-size: 12px; color: #15803d;">Weather looks great. Perfect for outdoor activities.</div>
+                </div>
+                <div class="e-cta">Generate Outfit Ideas</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WEATHER EMAILS -->
+    <section id="weather" class="category">
+      <div class="category-header">
+        <span class="category-icon">&#127780;</span>
+        <h2 class="category-title">Weather-Based Emails</h2>
+        <span class="category-count">2 templates</span>
+      </div>
+
+      <div class="email-grid">
+
+        <!-- Weather Change Alert -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">weather_change_alert</span>
+            <div class="email-name">Weather Change Alert</div>
+            <div class="email-subject">Subject: "Weather alert: Temperature drop on Friday"</div>
+            <div class="email-badges">
+              <span class="badge badge-high">High Priority</span>
+              <span class="badge badge-frequency">As Needed</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner" style="background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);">
+                <div class="e-banner-icon">&#127784;</div>
+                <div class="e-banner-text">Weather Change Alert</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Heads up, Sarah!</div>
+                <div class="e-text">The weather forecast for <strong>Friday</strong> has changed significantly.</div>
+                <div style="display: flex; gap: 8px; margin: 12px 0;">
+                  <div style="flex: 1; background-color: #fee2e2; border-radius: 8px; padding: 12px; text-align: center;">
+                    <div style="font-size: 9px; color: #991b1b; text-transform: uppercase; margin-bottom: 4px;">Was Expected</div>
+                    <div style="font-size: 24px;">&#9728;</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #991b1b;">65°</div>
+                    <div style="font-size: 10px; color: #b91c1c;">Sunny</div>
+                  </div>
+                  <div style="flex: 1; background-color: #dbeafe; border-radius: 8px; padding: 12px; text-align: center;">
+                    <div style="font-size: 9px; color: #1e40af; text-transform: uppercase; margin-bottom: 4px;">Now Expected</div>
+                    <div style="font-size: 24px;">&#127783;</div>
+                    <div style="font-size: 18px; font-weight: 700; color: #1e40af;">42°</div>
+                    <div style="font-size: 10px; color: #1d4ed8;">Rain</div>
+                  </div>
+                </div>
+                <div class="e-alert">
+                  <strong>Your planned outfit may not work</strong><br>
+                  You have an outfit planned that was based on the old forecast.
+                </div>
+                <div class="e-cta">Change My Outfit</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weekly Weather Forecast -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">weather_weekly_forecast</span>
+            <div class="email-name">Weekly Weather Outlook</div>
+            <div class="email-subject">Subject: "Your week ahead: Mix of sun and clouds"</div>
+            <div class="email-badges">
+              <span class="badge badge-medium">Medium Priority</span>
+              <span class="badge badge-frequency">Weekly</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-weather">
+                <div class="e-banner-icon">&#127774;</div>
+                <div class="e-banner-text">42°-58°</div>
+                <div class="e-banner-sub">This week in New York</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Your weekly weather outlook, Sarah</div>
+                <div class="e-text">Here's what to expect this week so you can plan your outfits accordingly.</div>
+                <div style="background-color: #f9fafb; border-radius: 8px; padding: 12px; margin: 12px 0; font-size: 11px;">
+                  <div style="display: flex; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+                    <span style="width: 60px; font-weight: 600;">Mon</span>
+                    <span style="width: 30px;">&#9728;</span>
+                    <span style="width: 60px; color: #ef4444; font-weight: 600;">52°</span>
+                    <span style="width: 40px; color: #3b82f6;">42°</span>
+                    <span style="flex: 1; text-align: right; color: #6b7280;">Sunny</span>
+                  </div>
+                  <div style="display: flex; padding: 8px 0; border-bottom: 1px solid #e5e7eb;">
+                    <span style="width: 60px; font-weight: 600;">Tue</span>
+                    <span style="width: 30px;">&#127782;</span>
+                    <span style="width: 60px; color: #ef4444; font-weight: 600;">48°</span>
+                    <span style="width: 40px; color: #3b82f6;">38°</span>
+                    <span style="flex: 1; text-align: right; color: #6b7280;">Cloudy</span>
+                  </div>
+                  <div style="display: flex; padding: 8px 0;">
+                    <span style="width: 60px; font-weight: 600;">Wed</span>
+                    <span style="width: 30px;">&#127783;</span>
+                    <span style="width: 60px; color: #ef4444; font-weight: 600;">45°</span>
+                    <span style="width: 40px; color: #3b82f6;">35°</span>
+                    <span style="flex: 1; text-align: right; color: #6b7280;">Rain</span>
+                  </div>
+                </div>
+                <div class="e-highlight" style="background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%); border-left-color: #06b6d4;">
+                  <div class="e-highlight-title" style="color: #0e7490;">&#127774; Week at a Glance</div>
+                  <div class="e-highlight-content" style="font-size: 12px; color: #155e75;">Cool start to the week with rain midweek. Warming trend by the weekend.</div>
+                </div>
+                <div class="e-cta">Plan My Week</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WARDROBE EMAILS -->
+    <section id="wardrobe" class="category">
+      <div class="category-header">
+        <span class="category-icon">&#128090;</span>
+        <h2 class="category-title">Wardrobe Engagement Emails</h2>
+        <span class="category-count">3 templates</span>
+      </div>
+
+      <div class="email-grid">
+
+        <!-- Unused Items -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">wardrobe_unused_items</span>
+            <div class="email-name">Rediscover Your Wardrobe</div>
+            <div class="email-subject">Subject: "Rediscover these items in your wardrobe"</div>
+            <div class="email-badges">
+              <span class="badge badge-low">Low Priority</span>
+              <span class="badge badge-frequency">Bi-weekly</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-wardrobe">
+                <div class="e-banner-icon">&#128717;</div>
+                <div class="e-banner-text">Rediscover Your Wardrobe</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Time to remix, Sarah!</div>
+                <div class="e-text">We noticed some items in your wardrobe haven't been worn in a while.</div>
+                <div style="background-color: #fff7ed; border-radius: 8px; padding: 12px; text-align: center; margin: 12px 0;">
+                  <div style="font-size: 28px; font-weight: 700; color: #ea580c;">8</div>
+                  <div style="font-size: 11px; color: #c2410c;">items haven't been worn in 30+ days</div>
+                </div>
+                <div style="font-size: 11px; font-weight: 600; color: #374151; margin-bottom: 8px;">HIDDEN GEMS IN YOUR CLOSET</div>
+                <div class="e-list-item">
+                  <div class="e-outfit-img" style="width: 40px; height: 40px; margin-right: 12px;">&#128085;</div>
+                  <div>
+                    <div style="font-weight: 500;">Navy Blue Blazer</div>
+                    <div style="font-size: 10px; color: #6b7280;">Outerwear &bull; Last worn 45 days ago</div>
+                  </div>
+                </div>
+                <div class="e-list-item">
+                  <div class="e-outfit-img" style="width: 40px; height: 40px; margin-right: 12px;">&#128086;</div>
+                  <div>
+                    <div style="font-weight: 500;">White Linen Pants</div>
+                    <div style="font-size: 10px; color: #6b7280;">Bottom &bull; Last worn 38 days ago</div>
+                  </div>
+                </div>
+                <div class="e-cta">Generate Outfit with These</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- New Combinations -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">wardrobe_new_combinations</span>
+            <div class="email-name">New Outfit Ideas</div>
+            <div class="email-subject">Subject: "24 new outfit ideas with your new Top"</div>
+            <div class="email-badges">
+              <span class="badge badge-medium">Medium Priority</span>
+              <span class="badge badge-frequency">Once</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-trip">
+                <div class="e-banner-icon">&#10024;</div>
+                <div class="e-banner-text">New Outfit Possibilities!</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Great addition, Sarah!</div>
+                <div class="e-text">Your new <strong>Top</strong> has unlocked <strong>24 new outfit combinations</strong>!</div>
+                <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 12px; padding: 16px; text-align: center; margin: 12px 0;">
+                  <div style="font-size: 10px; color: #059669; text-transform: uppercase; margin-bottom: 8px;">Your New Item</div>
+                  <div class="e-outfit-img" style="width: 100px; height: 100px; margin: 0 auto 8px; font-size: 48px;">&#128085;</div>
+                  <div style="font-weight: 500; color: #1a1a1a;">Striped Cotton Blouse</div>
+                  <div style="font-size: 11px; color: #6b7280;">Top</div>
+                </div>
+                <div class="e-stats">
+                  <div class="e-stat" style="background-color: #ecfdf5;">
+                    <div class="e-stat-num" style="color: #16a34a;">24</div>
+                    <div class="e-stat-label">New Combos</div>
+                  </div>
+                  <div class="e-stat" style="background-color: #ecfdf5;">
+                    <div class="e-stat-num" style="color: #16a34a;">12</div>
+                    <div class="e-stat-label">Matching Items</div>
+                  </div>
+                </div>
+                <div class="e-cta">Generate Outfits with This Item</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Style Insights -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">wardrobe_style_insights</span>
+            <div class="email-name">Your Style Report</div>
+            <div class="email-subject">Subject: "Your December Style Report"</div>
+            <div class="email-badges">
+              <span class="badge badge-medium">Medium Priority</span>
+              <span class="badge badge-frequency">Monthly</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header" style="padding: 24px;">
+                <div style="font-size: 11px; color: rgba(255,255,255,0.8); text-transform: uppercase;">Monthly Style Report</div>
+                <div style="font-size: 24px; font-weight: 700; color: white; margin-top: 8px;">December 2024</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Your month in style, Sarah</div>
+                <div class="e-text">Here's a look at your style journey this past month.</div>
+                <div class="e-stats">
+                  <div class="e-stat" style="background-color: #faf5ff;">
+                    <div class="e-stat-num">28</div>
+                    <div class="e-stat-label">Outfits</div>
+                  </div>
+                  <div class="e-stat" style="background-color: #fdf4ff;">
+                    <div class="e-stat-num" style="color: #c026d3;">12</div>
+                    <div class="e-stat-label">Favorites</div>
+                  </div>
+                  <div class="e-stat" style="background-color: #f0fdf4;">
+                    <div class="e-stat-num" style="color: #16a34a;">5</div>
+                    <div class="e-stat-label">Added</div>
+                  </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 12px; padding: 16px; margin: 12px 0;">
+                  <div style="font-size: 11px; color: #7c3aed; text-transform: uppercase; margin-bottom: 8px;">&#127912; Your Color Palette</div>
+                  <div style="display: flex; justify-content: center; gap: 12px;">
+                    <div style="text-align: center;">
+                      <div style="width: 32px; height: 32px; background-color: #1e3a8a; border-radius: 50%; margin: 0 auto;"></div>
+                      <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">Navy</div>
+                    </div>
+                    <div style="text-align: center;">
+                      <div style="width: 32px; height: 32px; background-color: #f5f5f4; border-radius: 50%; margin: 0 auto; border: 1px solid #e5e7eb;"></div>
+                      <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">White</div>
+                    </div>
+                    <div style="text-align: center;">
+                      <div style="width: 32px; height: 32px; background-color: #1a1a1a; border-radius: 50%; margin: 0 auto;"></div>
+                      <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">Black</div>
+                    </div>
+                    <div style="text-align: center;">
+                      <div style="width: 32px; height: 32px; background-color: #f5d0a8; border-radius: 50%; margin: 0 auto;"></div>
+                      <div style="font-size: 10px; color: #6b7280; margin-top: 4px;">Beige</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="e-cta">View Full Style Profile</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WISHLIST EMAILS -->
+    <section id="wishlist" class="category">
+      <div class="category-header">
+        <span class="category-icon">&#128150;</span>
+        <h2 class="category-title">Wishlist & Capsule Emails</h2>
+        <span class="category-count">2 templates</span>
+      </div>
+
+      <div class="email-grid">
+
+        <!-- Wishlist Outfit Potential -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">wishlist_outfit_potential</span>
+            <div class="email-name">Complete Your Outfit</div>
+            <div class="email-subject">Subject: "That blazer would create 18 new outfits!"</div>
+            <div class="email-badges">
+              <span class="badge badge-low">Low Priority</span>
+              <span class="badge badge-frequency">Weekly</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-wishlist">
+                <div class="e-banner-icon">&#128150;</div>
+                <div class="e-banner-text">Your Wishlist + Wardrobe</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Smart shopping insights, Sarah</div>
+                <div class="e-text">We analyzed your wishlist against your wardrobe. Here's how many new outfit combinations each item would unlock!</div>
+                <div style="font-size: 11px; font-weight: 600; color: #374151; margin-bottom: 8px;">BEST VALUE ITEMS</div>
+                <div style="background-color: #fdf2f8; border-radius: 8px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #ec4899;">
+                  <div style="display: flex; align-items: center;">
+                    <div class="e-outfit-img" style="width: 50px; height: 50px; margin-right: 12px;">&#128090;</div>
+                    <div style="flex: 1;">
+                      <div style="font-weight: 500;">Camel Wool Coat</div>
+                      <div style="font-size: 10px; color: #6b7280;">Outerwear</div>
+                      <div style="display: inline-block; background-color: #fbcfe8; border-radius: 4px; padding: 2px 6px; margin-top: 4px;">
+                        <span style="font-size: 11px; font-weight: 700; color: #be185d;">+18 outfits</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%); border-radius: 12px; padding: 16px; text-align: center; margin: 12px 0;">
+                  <div style="font-size: 11px; color: #9d174d;">If you bought all 5 wishlist items:</div>
+                  <div style="font-size: 36px; font-weight: 700; color: #be185d;">+42</div>
+                  <div style="font-size: 13px; color: #db2777;">new outfit combinations</div>
+                </div>
+                <div class="e-cta">View My Wishlist</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Capsule Missing Items -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">capsule_missing_items</span>
+            <div class="email-name">Capsule Completion</div>
+            <div class="email-subject">Subject: "Complete your Classic Work capsule: 4 items to go"</div>
+            <div class="email-badges">
+              <span class="badge badge-low">Low Priority</span>
+              <span class="badge badge-frequency">Weekly</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner" style="background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);">
+                <div class="e-banner-icon">&#127912;</div>
+                <div class="e-banner-text">Capsule Wardrobe Progress</div>
+                <div class="e-banner-sub">Classic Work</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">You're almost there, Sarah!</div>
+                <div class="e-text">Your <strong>Classic Work</strong> capsule is <strong>73% complete</strong>. Just a few more pieces!</div>
+                <div class="e-progress"><div class="e-progress-bar" style="width: 73%; background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);"></div></div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; color: #6b7280; margin-bottom: 12px;">
+                  <span>11 of 15 items</span>
+                  <span style="color: #6366f1; font-weight: 600;">4 to go</span>
+                </div>
+                <div style="font-size: 11px; font-weight: 600; color: #374151; margin-bottom: 8px;">&#128269; ITEMS YOU STILL NEED</div>
+                <div style="background-color: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 8px; border-left: 3px solid #6366f1;">
+                  <div style="font-weight: 500;">White Button-Down Shirt</div>
+                  <div style="font-size: 10px; color: #6b7280;">Top &bull; Classic essential for any work wardrobe</div>
+                </div>
+                <div style="background-color: #f9fafb; border-radius: 8px; padding: 12px; border-left: 3px solid #6366f1;">
+                  <div style="font-weight: 500;">Navy Blazer</div>
+                  <div style="font-size: 10px; color: #6b7280;">Outerwear &bull; Versatile layering piece</div>
+                </div>
+                <div class="e-cta">View My Capsule</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RE-ENGAGEMENT EMAILS -->
+    <section id="reengagement" class="category">
+      <div class="category-header">
+        <span class="category-icon">&#128139;</span>
+        <h2 class="category-title">Re-engagement Emails</h2>
+        <span class="category-count">3 templates</span>
+      </div>
+
+      <div class="email-grid">
+
+        <!-- 7 Day Re-engagement -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">reengagement_7days</span>
+            <div class="email-name">We Miss You (Soft)</div>
+            <div class="email-subject">Subject: "Your wardrobe misses you, Sarah"</div>
+            <div class="email-badges">
+              <span class="badge badge-medium">Medium Priority</span>
+              <span class="badge badge-frequency">Once</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header" style="padding: 24px;">
+                <div class="e-banner-icon">&#128139;</div>
+                <div style="font-size: 16px; font-weight: 600; color: white;">We Miss You!</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">Hey Sarah, it's been a week!</div>
+                <div class="e-text">Your wardrobe is ready and waiting with fresh outfit ideas.</div>
+                <div style="background-color: #f9fafb; border-radius: 12px; padding: 16px; margin: 12px 0;">
+                  <div style="font-size: 11px; font-weight: 600; color: #374151; margin-bottom: 12px;">&#10024; Your Wardrobe at a Glance</div>
+                  <div class="e-list-item"><span class="e-list-icon">&#128090;</span> <strong>42</strong> items in your wardrobe</div>
+                  <div class="e-list-item"><span class="e-list-icon">&#10024;</span> <strong>156</strong> possible outfit combinations</div>
+                  <div class="e-list-item" style="border-bottom: none;"><span class="e-list-icon">&#11088;</span> <strong>8</strong> saved favorites</div>
+                </div>
+                <div class="e-highlight">
+                  <div style="text-align: center; font-size: 11px; color: #7c3aed; margin-bottom: 8px;">Today's Quick Pick</div>
+                  <div class="e-outfit-grid">
+                    <div class="e-outfit-item">
+                      <div class="e-outfit-img">&#128085;</div>
+                      <div class="e-outfit-label">Top</div>
+                    </div>
+                    <div class="e-outfit-item">
+                      <div class="e-outfit-img">&#128086;</div>
+                      <div class="e-outfit-label">Bottom</div>
+                    </div>
+                    <div class="e-outfit-item">
+                      <div class="e-outfit-img">&#128095;</div>
+                      <div class="e-outfit-label">Shoes</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="e-cta">Generate Today's Outfit</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 14 Day Re-engagement -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">reengagement_14days</span>
+            <div class="email-name">Style Waiting</div>
+            <div class="email-subject">Subject: "Sarah, your style is waiting"</div>
+            <div class="email-badges">
+              <span class="badge badge-medium">Medium Priority</span>
+              <span class="badge badge-frequency">Once</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-alert">
+                <div class="e-banner-icon">&#127775;</div>
+                <div class="e-banner-text" style="color: #78350f;">Your Style is Waiting</div>
+              </div>
+              <div class="e-content">
+                <div class="e-greeting">It's been a couple weeks, Sarah</div>
+                <div class="e-text">Life gets busy - we get it! But your wardrobe has been patiently waiting.</div>
+                <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-radius: 12px; padding: 20px; text-align: center; margin: 12px 0;">
+                  <div style="font-size: 11px; color: #92400e;">Your wardrobe potential:</div>
+                  <div style="font-size: 42px; font-weight: 700; color: #b45309;">156</div>
+                  <div style="font-size: 13px; color: #d97706;">outfit combinations waiting</div>
+                </div>
+                <div style="font-size: 13px; font-weight: 600; color: #1a1a1a; margin: 12px 0 8px;">Quick things you can do:</div>
+                <div class="e-list-item"><span class="e-list-icon">&#9889;</span> Get an instant outfit - one tap styling</div>
+                <div class="e-list-item"><span class="e-list-icon">&#128197;</span> Plan your week ahead</div>
+                <div class="e-list-item" style="border-bottom: none;"><span class="e-list-icon">&#128248;</span> Add new items</div>
+                <div class="e-cta">Generate an Outfit Now</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Milestone -->
+        <div class="email-card">
+          <div class="email-meta">
+            <span class="email-trigger-id">milestone_outfits</span>
+            <div class="email-name">Outfit Milestone</div>
+            <div class="email-subject">Subject: "50 outfits! You're a style pro, Sarah"</div>
+            <div class="email-badges">
+              <span class="badge badge-high">High Priority</span>
+              <span class="badge badge-frequency">Once</span>
+            </div>
+          </div>
+          <div class="email-preview">
+            <div class="email-frame">
+              <div class="e-header">
+                <div class="e-logo">Kiko</div>
+                <div class="e-tagline">Your Personal Style Assistant</div>
+              </div>
+              <div class="e-banner e-banner-milestone">
+                <div class="e-banner-icon">&#127881;</div>
+                <div class="e-banner-text">Milestone Achieved!</div>
+              </div>
+              <div class="e-content">
+                <div style="text-align: center; margin-bottom: 12px;">
+                  <div style="font-size: 56px; font-weight: 800; background: linear-gradient(135deg, #10b981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">50</div>
+                  <div style="font-size: 14px; color: #059669; font-weight: 600;">outfits created!</div>
+                </div>
+                <div class="e-greeting" style="text-align: center;">You're on fire, Sarah! &#128293;</div>
+                <div class="e-text" style="text-align: center;">You've officially created <strong>50 outfits</strong> with Kiko. That's some serious style dedication!</div>
+                <div class="e-stats">
+                  <div class="e-stat" style="background-color: #ecfdf5;">
+                    <div class="e-stat-num" style="color: #059669;">45</div>
+                    <div class="e-stat-label">Days Active</div>
+                  </div>
+                  <div class="e-stat" style="background-color: #ecfdf5;">
+                    <div class="e-stat-num" style="color: #059669;">42</div>
+                    <div class="e-stat-label">Items</div>
+                  </div>
+                  <div class="e-stat" style="background-color: #ecfdf5;">
+                    <div class="e-stat-num" style="color: #059669;">12</div>
+                    <div class="e-stat-label">Favorites</div>
+                  </div>
+                </div>
+                <div style="background-color: #fef3c7; border-radius: 8px; padding: 12px; text-align: center; margin: 12px 0;">
+                  <div style="font-size: 11px; color: #92400e;">&#127919; Next milestone</div>
+                  <div style="font-size: 20px; font-weight: 700; color: #b45309;">100 outfits</div>
+                  <div style="font-size: 11px; color: #d97706;">Only 50 to go!</div>
+                </div>
+                <div class="e-cta">Keep the Streak Going!</div>
+              </div>
+              <div class="e-footer">
+                <div class="e-footer-text">You're receiving this email because you have an account with Kiko.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>

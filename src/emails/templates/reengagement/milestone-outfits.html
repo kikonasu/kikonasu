@@ -1,0 +1,137 @@
+<!--
+  TRIGGER: milestone_outfits
+  WHEN: User hits 10, 25, 50, 100 outfits created
+  FREQUENCY: Once per milestone
+  SUBJECT: "{{milestoneNumber}} outfits! You're a style pro, {{userName}}"
+  PREVIEW: "Celebrating your fashion journey milestone"
+-->
+
+<!-- Celebration Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #10b981 0%, #34d399 50%, #6ee7b7 100%); padding: 32px 24px; text-align: center;">
+    <p style="font-size: 56px; margin: 0 0 8px 0;">&#127881;</p>
+    <p style="font-size: 24px; font-weight: 700; color: #ffffff; margin: 0;">
+      Milestone Achieved!
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Big Number -->
+    <div style="text-align: center; margin: 0 0 24px 0;">
+      <p style="font-size: 80px; font-weight: 800; background: linear-gradient(135deg, #10b981 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">
+        {{milestoneNumber}}
+      </p>
+      <p style="font-size: 18px; color: #059669; font-weight: 600; margin: 8px 0 0 0;">
+        outfits created!
+      </p>
+    </div>
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0; text-align: center;">
+      You're on fire, {{userName}}! &#128293;
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0; text-align: center;">
+      You've officially created <strong>{{milestoneNumber}} outfits</strong> with Kiko. That's some serious style dedication!
+    </p>
+
+    <!-- Journey Stats -->
+    <div style="background-color: #f9fafb; border-radius: 16px; padding: 24px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 16px 0; text-align: center;">
+        Your Style Journey So Far
+      </p>
+
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 8px;">
+        <tr>
+          <td style="width: 50%; text-align: center; padding: 16px; background-color: #ecfdf5; border-radius: 12px;">
+            <p style="font-size: 28px; font-weight: 700; color: #059669; margin: 0;">{{stats.daysActive}}</p>
+            <p style="font-size: 12px; color: #047857; margin: 4px 0 0 0;">Days Active</p>
+          </td>
+          <td style="width: 50%; text-align: center; padding: 16px; background-color: #ecfdf5; border-radius: 12px;">
+            <p style="font-size: 28px; font-weight: 700; color: #059669; margin: 0;">{{stats.itemsInWardrobe}}</p>
+            <p style="font-size: 12px; color: #047857; margin: 4px 0 0 0;">Wardrobe Items</p>
+          </td>
+        </tr>
+        <tr>
+          <td style="width: 50%; text-align: center; padding: 16px; background-color: #ecfdf5; border-radius: 12px;">
+            <p style="font-size: 28px; font-weight: 700; color: #059669; margin: 0;">{{stats.favoritesSaved}}</p>
+            <p style="font-size: 12px; color: #047857; margin: 4px 0 0 0;">Favorites Saved</p>
+          </td>
+          <td style="width: 50%; text-align: center; padding: 16px; background-color: #ecfdf5; border-radius: 12px;">
+            <p style="font-size: 28px; font-weight: 700; color: #059669; margin: 0;">{{stats.tripsPlanned}}</p>
+            <p style="font-size: 12px; color: #047857; margin: 4px 0 0 0;">Trips Planned</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Top Outfit -->
+    {{#if topOutfit}}
+    <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; padding: 20px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #7c3aed; margin: 0 0 16px 0; text-align: center;">
+        &#11088; Your Most-Loved Outfit
+      </p>
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          {{#each topOutfit.items}}
+          <td style="width: 33.33%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 100%; max-width: 90px; height: auto; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          </td>
+          {{/each}}
+        </tr>
+      </table>
+      <p style="font-size: 13px; color: #6b7280; margin: 12px 0 0 0; text-align: center;">
+        Worn {{topOutfit.timesWorn}} times
+      </p>
+    </div>
+    {{/if}}
+
+    <!-- Next Milestone -->
+    <div class="highlight-box" style="background-color: #fef3c7; border-radius: 12px; padding: 16px 20px; margin: 0 0 24px 0; text-align: center;">
+      <p style="font-size: 14px; font-weight: 600; color: #92400e; margin: 0 0 4px 0;">
+        &#127919; Next milestone
+      </p>
+      <p style="font-size: 24px; font-weight: 700; color: #b45309; margin: 0;">
+        {{nextMilestone}} outfits
+      </p>
+      <p style="font-size: 14px; color: #d97706; margin: 4px 0 0 0;">
+        Only {{outfitsToGo}} to go!
+      </p>
+    </div>
+
+    <!-- Motivational Message -->
+    <p style="font-size: 15px; color: #6b7280; text-align: center; font-style: italic; margin: 0 0 24px 0;">
+      "{{motivationalQuote}}"
+    </p>
+
+    <!-- CTA -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/outfit" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            Keep the Streak Going!
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/favorites" class="secondary-button" style="display: inline-block; background-color: #f3f4f6; color: #4b5563; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 8px; text-decoration: none;">
+            View All Favorites
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Share Prompt -->
+    <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid #e5e7eb; text-align: center;">
+      <p style="font-size: 14px; color: #6b7280; margin: 0;">
+        Proud of your style journey? Share your milestone! &#127881;
+      </p>
+    </div>
+
+  </td>
+</tr>

@@ -1,0 +1,16 @@
+project_id = "havsqjmgpywzvwpdtawv"
+
+[functions.classify-clothing]
+verify_jwt = true
+
+[functions.get-weather]
+verify_jwt = true
+
+[functions.delete-user]
+verify_jwt = true
+
+[functions.generate-clothing-image]
+verify_jwt = true
+
+[functions.compute-style-preferences]
+verify_jwt = true

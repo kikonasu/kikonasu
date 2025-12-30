@@ -1,0 +1,161 @@
+<!--
+  TRIGGER: trip_daily_outfit
+  WHEN: Morning of each trip day (~7am local time at destination)
+  FREQUENCY: Daily during trip
+  SUBJECT: "Day {{dayNumber}} outfit for {{destination}}"
+  PREVIEW: "{{weatherCondition}}, {{temperature}}° - here's what to wear"
+-->
+
+<!-- Day Counter Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #D946EF 100%); padding: 16px 24px;">
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td style="text-align: center;">
+          <p style="font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 1px; margin: 0;">
+            {{tripName}}
+          </p>
+          <p style="font-size: 32px; font-weight: 700; color: #ffffff; margin: 8px 0 0 0;">
+            Day {{dayNumber}} of {{totalDays}}
+          </p>
+          <p style="font-size: 14px; color: rgba(255,255,255,0.9); margin: 4px 0 0 0;">
+            {{currentDate}}
+          </p>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Weather First (Most Important for Outfit) -->
+    <div class="weather-widget" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); border-radius: 12px; padding: 16px 20px; margin: 0 0 24px 0;">
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          <td style="width: 60px; vertical-align: middle;">
+            <span style="font-size: 48px;">{{weather.icon}}</span>
+          </td>
+          <td style="vertical-align: middle; padding-left: 16px;">
+            <p style="font-size: 32px; font-weight: 700; color: #0369a1; margin: 0;">{{weather.temperature}}°</p>
+            <p style="font-size: 14px; color: #0284c7; margin: 4px 0 0 0;">{{weather.condition}} | High {{weather.high}}° Low {{weather.low}}°</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 22px; font-weight: 600; color: #1a1a1a; margin: 0 0 8px 0;">
+      Good morning, {{userName}}!
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      Here's your planned outfit for today in {{destination}}.
+      {{#if occasion}}
+      <br><span style="color: #7c3aed;">Today's plan: {{occasion}}</span>
+      {{/if}}
+    </p>
+
+    <!-- Today's Outfit -->
+    <div style="background-color: #f9fafb; border-radius: 16px; padding: 24px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 16px 0; text-align: center;">
+        Today's Outfit
+      </p>
+
+      <!-- Outfit Grid -->
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          {{#if outfit.dress}}
+          <!-- Dress Layout (Single item) -->
+          <td style="padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{outfit.dress.imageUrl}}" alt="Dress" style="width: 100%; max-width: 180px; height: auto; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 12px; color: #6b7280; margin: 0;">{{outfit.dress.description}}</p>
+          </td>
+          {{else}}
+          <!-- Top + Bottom Layout -->
+          {{#if outfit.top}}
+          <td style="width: 50%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{outfit.top.imageUrl}}" alt="Top" style="width: 100%; max-width: 140px; height: auto; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Top</p>
+          </td>
+          {{/if}}
+          {{#if outfit.bottom}}
+          <td style="width: 50%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{outfit.bottom.imageUrl}}" alt="Bottom" style="width: 100%; max-width: 140px; height: auto; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Bottom</p>
+          </td>
+          {{/if}}
+          {{/if}}
+        </tr>
+        <tr>
+          {{#if outfit.shoes}}
+          <td style="width: 50%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{outfit.shoes.imageUrl}}" alt="Shoes" style="width: 100%; max-width: 100px; height: auto; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Shoes</p>
+          </td>
+          {{/if}}
+          {{#if outfit.outerwear}}
+          <td style="width: 50%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{outfit.outerwear.imageUrl}}" alt="Layer" style="width: 100%; max-width: 100px; height: auto; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Layer</p>
+          </td>
+          {{/if}}
+        </tr>
+        {{#if outfit.accessory}}
+        <tr>
+          <td colspan="2" style="padding: 8px; text-align: center;">
+            <img src="{{outfit.accessory.imageUrl}}" alt="Accessory" style="width: 100%; max-width: 80px; height: auto; border-radius: 12px; margin-bottom: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Accessory</p>
+          </td>
+        </tr>
+        {{/if}}
+      </table>
+    </div>
+
+    <!-- Weather Advisory (if applicable) -->
+    {{#if weatherAdvisory}}
+    <div style="background-color: #fef3c7; border-radius: 12px; padding: 16px; margin: 0 0 24px 0; border-left: 4px solid #f59e0b;">
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          <td style="width: 30px; vertical-align: top;">
+            <span style="font-size: 18px;">&#9888;</span>
+          </td>
+          <td style="font-size: 14px; color: #92400e;">
+            <strong>Weather note:</strong> {{weatherAdvisory}}
+          </td>
+        </tr>
+      </table>
+    </div>
+    {{/if}}
+
+    <!-- CTA -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/suitcase/{{suitcaseId}}?day={{dayNumber}}" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 14px 28px; border-radius: 12px; text-decoration: none;">
+            View Full Trip
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/suitcase/{{suitcaseId}}?day={{dayNumber}}&change=true" class="secondary-button" style="display: inline-block; background-color: #f3f4f6; color: #4b5563; font-size: 14px; font-weight: 500; padding: 10px 20px; border-radius: 8px; text-decoration: none;">
+            Change Today's Outfit
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Tomorrow Preview -->
+    {{#if tomorrowPreview}}
+    <div style="height: 1px; background-color: #e5e7eb; margin: 24px 0;"></div>
+
+    <p style="font-size: 14px; color: #6b7280; margin: 0 0 12px 0;">
+      <strong>Tomorrow's forecast:</strong> {{tomorrowPreview.weather}} {{tomorrowPreview.high}}°/{{tomorrowPreview.low}}°
+    </p>
+    {{/if}}
+
+  </td>
+</tr>

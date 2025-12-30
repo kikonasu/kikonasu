@@ -1,0 +1,135 @@
+<!--
+  TRIGGER: wardrobe_unused_items
+  WHEN: Items haven't been used in 30+ days
+  FREQUENCY: Bi-weekly
+  SUBJECT: "Rediscover these items in your wardrobe"
+  PREVIEW: "{{itemCount}} items you haven't worn in a while"
+-->
+
+<!-- Rediscover Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #f97316 0%, #fb923c 50%, #fdba74 100%); padding: 24px; text-align: center;">
+    <p style="font-size: 36px; margin: 0 0 8px 0;">&#128717;</p>
+    <p style="font-size: 20px; font-weight: 600; color: #ffffff; margin: 0;">
+      Rediscover Your Wardrobe
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Time to remix, {{userName}}!
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      We noticed some items in your wardrobe haven't been worn in a while. Sometimes our favorite pieces get pushed to the back - let's bring them back into rotation!
+    </p>
+
+    <!-- Stats -->
+    <div style="background-color: #fff7ed; border-radius: 12px; padding: 16px 20px; margin: 0 0 24px 0; text-align: center;">
+      <p style="font-size: 36px; font-weight: 700; color: #ea580c; margin: 0;">{{unusedCount}}</p>
+      <p style="font-size: 14px; color: #c2410c; margin: 4px 0 0 0;">items haven't been worn in 30+ days</p>
+    </div>
+
+    <!-- Unused Items Showcase -->
+    <p style="font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 16px 0;">
+      Hidden Gems in Your Closet
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin: 0 0 24px 0;">
+      {{#each unusedItems}}
+      <tr>
+        <td style="padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 80px; vertical-align: middle;">
+                <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;">
+              </td>
+              <td style="vertical-align: middle; padding-left: 16px;">
+                <p style="font-size: 15px; font-weight: 500; color: #1a1a1a; margin: 0;">{{this.description}}</p>
+                <p style="font-size: 13px; color: #6b7280; margin: 4px 0 0 0;">
+                  {{this.category}} &bull; Last worn {{this.daysSinceWorn}} days ago
+                </p>
+              </td>
+              <td style="width: 100px; text-align: right; vertical-align: middle;">
+                <p style="font-size: 12px; color: #8B5CF6; margin: 0;">
+                  {{this.outfitPotential}} outfit ideas
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+
+    <!-- Outfit Ideas with Unused Items -->
+    {{#if outfitSuggestions}}
+    <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; padding: 20px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #7c3aed; margin: 0 0 16px 0;">
+        &#10024; Fresh outfit ideas using these items
+      </p>
+      {{#each outfitSuggestions}}
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(139, 92, 246, 0.2);">
+        <tr>
+          {{#each this.items}}
+          <td style="width: 25%; padding: 4px; text-align: center; vertical-align: top;">
+            <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 100%; max-width: 70px; height: auto; border-radius: 8px; {{#if this.isUnused}}border: 2px solid #8B5CF6;{{/if}}">
+            {{#if this.isUnused}}
+            <p style="font-size: 10px; color: #7c3aed; margin: 4px 0 0 0;">&#11088; Unused</p>
+            {{/if}}
+          </td>
+          {{/each}}
+        </tr>
+      </table>
+      {{/each}}
+    </div>
+    {{/if}}
+
+    <!-- Tips -->
+    <p style="font-size: 16px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Tips to refresh your style:
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin: 0 0 24px 0;">
+      <tr>
+        <td style="padding: 8px 0; font-size: 15px; color: #4a4a4a;">
+          <span style="color: #f97316; margin-right: 8px;">&#8226;</span> Try pairing old favorites with new pieces
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 0; font-size: 15px; color: #4a4a4a;">
+          <span style="color: #f97316; margin-right: 8px;">&#8226;</span> Layer items you haven't combined before
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 0; font-size: 15px; color: #4a4a4a;">
+          <span style="color: #f97316; margin-right: 8px;">&#8226;</span> Consider donating items you no longer love
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTA -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/outfit?includeUnused=true" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            Generate Outfit with These
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/wardrobe?sort=unused" class="secondary-button" style="display: inline-block; background-color: #f3f4f6; color: #4b5563; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 8px; text-decoration: none;">
+            View All Unused Items
+          </a>
+        </td>
+      </tr>
+    </table>
+
+  </td>
+</tr>

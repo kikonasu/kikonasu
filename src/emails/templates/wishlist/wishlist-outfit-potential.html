@@ -1,0 +1,137 @@
+<!--
+  TRIGGER: wishlist_outfit_potential
+  WHEN: Weekly digest - wishlist items that match wardrobe
+  FREQUENCY: Weekly
+  SUBJECT: "{{itemName}} would create {{outfitCount}} new outfits!"
+  PREVIEW: "See how your wishlist items work with your wardrobe"
+-->
+
+<!-- Wishlist Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #f9a8d4 100%); padding: 24px; text-align: center;">
+    <p style="font-size: 36px; margin: 0 0 8px 0;">&#128150;</p>
+    <p style="font-size: 20px; font-weight: 600; color: #ffffff; margin: 0;">
+      Your Wishlist + Wardrobe
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Smart shopping insights, {{userName}}
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      We analyzed your wishlist against your wardrobe. Here's how many new outfit combinations each item would unlock!
+    </p>
+
+    <!-- Top Wishlist Items by Outfit Potential -->
+    <p style="font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 16px 0;">
+      Best Value Items
+    </p>
+
+    {{#each topWishlistItems}}
+    <div style="background-color: #fdf2f8; border-radius: 12px; padding: 16px; margin: 0 0 16px 0; border-left: 4px solid #ec4899;">
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          <td style="width: 80px; vertical-align: top;">
+            <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;">
+          </td>
+          <td style="vertical-align: top; padding-left: 16px;">
+            <p style="font-size: 15px; font-weight: 600; color: #1a1a1a; margin: 0;">{{this.name}}</p>
+            <p style="font-size: 13px; color: #6b7280; margin: 4px 0;">{{this.category}}</p>
+            <table role="presentation" style="border: none; border-spacing: 0;">
+              <tr>
+                <td style="background-color: #fbcfe8; border-radius: 4px; padding: 4px 8px;">
+                  <p style="font-size: 14px; font-weight: 700; color: #be185d; margin: 0;">
+                    +{{this.outfitPotential}} outfits
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td style="width: 100px; text-align: right; vertical-align: top;">
+            {{#if this.priceRange}}
+            <p style="font-size: 14px; color: #6b7280; margin: 0;">{{this.priceRange}}</p>
+            {{/if}}
+          </td>
+        </tr>
+      </table>
+
+      <!-- Sample Outfit Preview -->
+      {{#if this.sampleOutfit}}
+      <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #fce7f3;">
+        <p style="font-size: 12px; color: #9ca3af; margin: 0 0 8px 0;">Sample outfit:</p>
+        <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+          <tr>
+            {{#each this.sampleOutfit}}
+            <td style="width: 25%; padding: 4px; text-align: center;">
+              <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 100%; max-width: 50px; height: auto; border-radius: 6px; {{#if this.isWishlist}}border: 2px dashed #ec4899;{{/if}}">
+            </td>
+            {{/each}}
+          </tr>
+        </table>
+      </div>
+      {{/if}}
+    </div>
+    {{/each}}
+
+    <!-- Outfit Potential Summary -->
+    <div class="highlight-box" style="background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%); border-radius: 12px; padding: 20px; margin: 0 0 24px 0; text-align: center;">
+      <p style="font-size: 14px; color: #9d174d; margin: 0 0 8px 0;">If you bought all {{totalWishlistItems}} wishlist items:</p>
+      <p style="font-size: 48px; font-weight: 700; color: #be185d; margin: 0;">+{{totalPotentialOutfits}}</p>
+      <p style="font-size: 16px; color: #db2777; margin: 4px 0 0 0;">new outfit combinations</p>
+    </div>
+
+    <!-- Items That Complete Gaps -->
+    {{#if gapFillers}}
+    <p style="font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 16px 0;">
+      Items That Fill Wardrobe Gaps
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin: 0 0 24px 0;">
+      {{#each gapFillers}}
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px; margin-bottom: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 50px; vertical-align: middle;">
+                <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">
+              </td>
+              <td style="vertical-align: middle; padding-left: 12px;">
+                <p style="font-size: 14px; font-weight: 500; color: #374151; margin: 0;">{{this.name}}</p>
+                <p style="font-size: 12px; color: #6b7280; margin: 2px 0 0 0;">{{this.gapReason}}</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td style="height: 8px;"></td></tr>
+      {{/each}}
+    </table>
+    {{/if}}
+
+    <!-- CTA -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/wishlist" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            View My Wishlist
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/outfit" class="secondary-button" style="display: inline-block; background-color: #f3f4f6; color: #4b5563; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 8px; text-decoration: none;">
+            Generate Outfit Ideas
+          </a>
+        </td>
+      </tr>
+    </table>
+
+  </td>
+</tr>

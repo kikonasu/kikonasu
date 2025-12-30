@@ -1,0 +1,155 @@
+<!--
+  TRIGGER: user_inactive_7days
+  WHEN: 7 days of no activity
+  FREQUENCY: Once per inactivity period
+  SUBJECT: "{{userName}}, your wardrobe misses you"
+  PREVIEW: "Your {{itemsCount}} items are waiting for you"
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>We Miss You</title>
+  <!--[if mso]>
+  <style type="text/css">
+    table { border-collapse: collapse; }
+    .fallback-font { font-family: Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+
+  <!-- Email Container -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8fafc;">
+    <tr>
+      <td align="center" style="padding: 40px 16px;">
+
+        <!-- Email Card -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 520px; background-color: #ffffff; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); overflow: hidden;">
+
+          <!-- Header with Gradient -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #fdf4ff 0%, #faf5ff 50%, #f5f3ff 100%); padding: 40px 32px 32px 32px; text-align: center;">
+
+              <!-- Logo -->
+              <img src="{{logoUrl}}" alt="Kikonasu" width="48" height="48" style="display: block; margin: 0 auto 24px auto; border-radius: 12px;">
+
+              <!-- Waving Hand Emoji -->
+              <div style="font-size: 48px; margin-bottom: 16px;">
+                <span>👋</span>
+              </div>
+
+              <h1 style="font-size: 28px; font-weight: 700; color: #1e1b4b; margin: 0 0 8px 0; line-height: 1.2;">
+                Hey {{userName}}, we miss you!
+              </h1>
+              <p style="font-size: 16px; color: #6b7280; margin: 0; line-height: 1.5;">
+                It's been a week since your last visit
+              </p>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 32px;">
+
+              <p style="font-size: 16px; line-height: 1.6; color: #374151; margin: 0 0 24px 0;">
+                Your digital wardrobe is still here, exactly how you left it. All your carefully uploaded pieces are waiting for their next outfit moment.
+              </p>
+
+              <!-- Stats Box -->
+              <div style="background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%); border-radius: 16px; padding: 24px; margin: 0 0 24px 0; border: 1px solid #d1fae5;">
+                <p style="font-size: 12px; font-weight: 600; color: #059669; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 16px 0;">
+                  Your Wardrobe Status
+                </p>
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                  <tr>
+                    <td style="padding: 8px 0;">
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td style="font-size: 15px; color: #374151;">Items in wardrobe</td>
+                          <td align="right" style="font-size: 15px; font-weight: 600; color: #059669;">{{itemsCount}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0;">
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td style="font-size: 15px; color: #374151;">Possible outfits</td>
+                          <td align="right" style="font-size: 15px; font-weight: 600; color: #059669;">{{outfitPotential}}+</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 8px 0;">
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td style="font-size: 15px; color: #374151;">Saved favorites</td>
+                          <td align="right" style="font-size: 15px; font-weight: 600; color: #059669;">{{favoritesCount}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+
+              <!-- Quick Actions -->
+              <p style="font-size: 14px; font-weight: 600; color: #1e1b4b; margin: 0 0 12px 0;">
+                Quick ways to jump back in:
+              </p>
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 24px;">
+                <tr>
+                  <td style="padding: 10px 0; font-size: 15px; color: #4b5563;">
+                    <span style="margin-right: 10px;">✨</span> Generate today's outfit in one tap
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0; font-size: 15px; color: #4b5563;">
+                    <span style="margin-right: 10px;">📸</span> Add a new piece you recently bought
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0; font-size: 15px; color: #4b5563;">
+                    <span style="margin-right: 10px;">❤️</span> Browse your saved favorites
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA Button -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td align="center">
+                    <a href="{{appUrl}}/todays-look" style="display: inline-block; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 40px; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 14px 0 rgba(139, 92, 246, 0.4);">
+                      Get Today's Look
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f9fafb; padding: 24px 32px; border-top: 1px solid #e5e7eb;">
+              <p style="font-size: 14px; color: #9ca3af; margin: 0 0 4px 0; text-align: center;">
+                We'll keep your wardrobe safe until you're ready.
+              </p>
+              <p style="font-size: 13px; color: #9ca3af; margin: 0; text-align: center;">
+                <a href="{{unsubscribeUrl}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

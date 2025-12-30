@@ -1,0 +1,153 @@
+<!--
+  TRIGGER: trip_completed
+  WHEN: Day after trip ends
+  FREQUENCY: Once per trip
+  SUBJECT: "Welcome back! How was {{destination}}?"
+  PREVIEW: "Let's save your favorite outfits from {{tripName}}"
+-->
+
+<!-- Welcome Back Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%); padding: 32px 24px; text-align: center;">
+    <p style="font-size: 40px; margin: 0 0 8px 0;">&#127968;</p>
+    <p style="font-size: 24px; font-weight: 600; color: #ffffff; margin: 0;">
+      Welcome Back!
+    </p>
+    <p style="font-size: 14px; color: rgba(255,255,255,0.8); margin: 8px 0 0 0;">
+      Hope you had an amazing time in {{destination}}
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      How was your trip, {{userName}}?
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      Your <strong>{{tripName}}</strong> trip is complete! We hope your outfits served you well. Here's a quick recap of what you wore.
+    </p>
+
+    <!-- Trip Stats -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 8px; margin: 0 0 24px 0;">
+      <tr>
+        <td style="width: 33.33%; text-align: center; padding: 20px 8px; background-color: #f9fafb; border-radius: 12px;">
+          <p style="font-size: 32px; font-weight: 700; color: #8B5CF6; margin: 0;">{{tripDuration}}</p>
+          <p style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 4px 0 0 0;">Days</p>
+        </td>
+        <td style="width: 33.33%; text-align: center; padding: 20px 8px; background-color: #f9fafb; border-radius: 12px;">
+          <p style="font-size: 32px; font-weight: 700; color: #8B5CF6; margin: 0;">{{totalOutfits}}</p>
+          <p style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 4px 0 0 0;">Outfits</p>
+        </td>
+        <td style="width: 33.33%; text-align: center; padding: 20px 8px; background-color: #f9fafb; border-radius: 12px;">
+          <p style="font-size: 32px; font-weight: 700; color: #8B5CF6; margin: 0;">{{uniqueItems}}</p>
+          <p style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 4px 0 0 0;">Items Used</p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Most Worn Items -->
+    {{#if mostWornItems}}
+    <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; padding: 20px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 16px 0;">
+        Your MVPs This Trip
+      </p>
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          {{#each mostWornItems}}
+          <td style="width: 33.33%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 100%; max-width: 100px; height: auto; border-radius: 12px; margin-bottom: 8px;">
+            <p style="font-size: 12px; color: #6b7280; margin: 0;">Worn {{this.timesWorn}}x</p>
+          </td>
+          {{/each}}
+        </tr>
+      </table>
+    </div>
+    {{/if}}
+
+    <!-- Save Favorites Prompt -->
+    <div class="highlight-box" style="background-color: #f0fdf4; border-radius: 12px; padding: 20px; margin: 0 0 24px 0; border-left: 4px solid #22c55e;">
+      <p style="font-size: 16px; font-weight: 600; color: #166534; margin: 0 0 8px 0;">
+        &#11088; Save your favorite outfits
+      </p>
+      <p style="font-size: 14px; color: #15803d; margin: 0;">
+        Did any outfits feel especially great? Save them to your favorites so you can easily recreate them later!
+      </p>
+    </div>
+
+    <!-- CTAs -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/suitcase/{{suitcaseId}}" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            Review Trip Outfits
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/favorites" class="secondary-button" style="display: inline-block; background-color: #f3f4f6; color: #4b5563; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 8px; text-decoration: none;">
+            View My Favorites
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Divider -->
+    <div style="height: 1px; background-color: #e5e7eb; margin: 32px 0;"></div>
+
+    <!-- What's Next -->
+    <p style="font-size: 16px; font-weight: 600; color: #1a1a1a; margin: 0 0 12px 0;">
+      What's next?
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin-bottom: 16px;">
+      {{#if nextTrip}}
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 40px; vertical-align: middle;">
+                <span style="font-size: 24px;">&#9992;</span>
+              </td>
+              <td style="vertical-align: middle;">
+                <p style="font-size: 15px; color: #374151; margin: 0;">
+                  <strong>{{nextTrip.name}}</strong> to {{nextTrip.destination}}
+                </p>
+                <p style="font-size: 13px; color: #6b7280; margin: 4px 0 0 0;">
+                  {{nextTrip.daysUntil}} days away
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      {{else}}
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 40px; vertical-align: middle;">
+                <span style="font-size: 24px;">&#128197;</span>
+              </td>
+              <td style="vertical-align: middle;">
+                <p style="font-size: 15px; color: #374151; margin: 0;">
+                  No upcoming trips planned
+                </p>
+                <p style="font-size: 13px; color: #6b7280; margin: 4px 0 0 0;">
+                  <a href="{{appUrl}}/suitcase/new" style="color: #8B5CF6; text-decoration: none;">Plan your next adventure</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      {{/if}}
+    </table>
+
+  </td>
+</tr>

@@ -1,0 +1,141 @@
+<!--
+  TRIGGER: reengagement_14days
+  WHEN: 14 days since last app visit
+  FREQUENCY: Once per inactivity period
+  SUBJECT: "{{userName}}, your style is waiting"
+  PREVIEW: "New features and outfit ideas since you've been away"
+-->
+
+<!-- Style Waiting Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fcd34d 100%); padding: 32px 24px; text-align: center;">
+    <p style="font-size: 48px; margin: 0 0 8px 0;">&#127775;</p>
+    <p style="font-size: 20px; font-weight: 600; color: #78350f; margin: 0;">
+      Your Style is Waiting
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      It's been a couple weeks, {{userName}}
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      Life gets busy - we get it! But your wardrobe has been patiently waiting with some outfit inspiration. Here's a quick recap of what's possible:
+    </p>
+
+    <!-- Wardrobe Potential -->
+    <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-radius: 16px; padding: 24px; margin: 0 0 24px 0; text-align: center;">
+      <p style="font-size: 14px; color: #92400e; margin: 0 0 8px 0;">Your wardrobe potential:</p>
+      <p style="font-size: 56px; font-weight: 700; color: #b45309; margin: 0;">{{totalPossibleOutfits}}</p>
+      <p style="font-size: 16px; color: #d97706; margin: 4px 0 0 0;">outfit combinations waiting</p>
+    </div>
+
+    <!-- Unused Gems -->
+    {{#if unusedItems}}
+    <p style="font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 16px 0;">
+      &#128142; Hidden gems in your closet
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin: 0 0 24px 0;">
+      <tr>
+        {{#each unusedItems}}
+        <td style="width: 25%; padding: 8px; text-align: center; vertical-align: top;">
+          <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 100%; max-width: 70px; height: auto; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <p style="font-size: 11px; color: #6b7280; margin: 8px 0 0 0;">{{this.daysSinceUsed}} days</p>
+        </td>
+        {{/each}}
+      </tr>
+    </table>
+    {{/if}}
+
+    <!-- Quick Actions -->
+    <p style="font-size: 16px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Quick things you can do:
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin: 0 0 24px 0;">
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 40px; vertical-align: middle;">
+                <span style="font-size: 24px;">&#9889;</span>
+              </td>
+              <td style="vertical-align: middle;">
+                <p style="font-size: 15px; color: #374151; margin: 0; font-weight: 500;">Get an instant outfit</p>
+                <p style="font-size: 13px; color: #6b7280; margin: 4px 0 0 0;">One tap and you're styled for the day</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td style="height: 8px;"></td></tr>
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 40px; vertical-align: middle;">
+                <span style="font-size: 24px;">&#128197;</span>
+              </td>
+              <td style="vertical-align: middle;">
+                <p style="font-size: 15px; color: #374151; margin: 0; font-weight: 500;">Plan your week ahead</p>
+                <p style="font-size: 13px; color: #6b7280; margin: 4px 0 0 0;">No more morning outfit stress</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td style="height: 8px;"></td></tr>
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 40px; vertical-align: middle;">
+                <span style="font-size: 24px;">&#128248;</span>
+              </td>
+              <td style="vertical-align: middle;">
+                <p style="font-size: 15px; color: #374151; margin: 0; font-weight: 500;">Add new items</p>
+                <p style="font-size: 13px; color: #6b7280; margin: 4px 0 0 0;">Keep your digital wardrobe up to date</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Upcoming Events Prompt -->
+    <div class="highlight-box" style="background-color: #f0fdf4; border-radius: 12px; padding: 16px 20px; margin: 0 0 24px 0; border-left: 4px solid #22c55e;">
+      <p style="font-size: 14px; font-weight: 600; color: #166534; margin: 0 0 8px 0;">
+        &#128161; Planning tip
+      </p>
+      <p style="font-size: 14px; color: #15803d; margin: 0;">
+        Got any trips, events, or special occasions coming up? Kiko can help you plan the perfect outfits in advance!
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/outfit" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            Generate an Outfit Now
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/suitcase/new" class="secondary-button" style="display: inline-block; background-color: #f3f4f6; color: #4b5563; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 8px; text-decoration: none;">
+            Plan a Trip
+          </a>
+        </td>
+      </tr>
+    </table>
+
+  </td>
+</tr>

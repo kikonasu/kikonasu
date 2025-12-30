@@ -1,0 +1,168 @@
+<!--
+  TRIGGER: wardrobe_style_insights
+  WHEN: First of the month
+  FREQUENCY: Monthly
+  SUBJECT: "Your {{monthName}} Style Report"
+  PREVIEW: "{{totalOutfits}} outfits created, your top colors, and more"
+-->
+
+<!-- Style Report Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #D946EF 100%); padding: 32px 24px; text-align: center;">
+    <p style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 1px; margin: 0;">
+      Monthly Style Report
+    </p>
+    <p style="font-size: 32px; font-weight: 700; color: #ffffff; margin: 12px 0 0 0;">
+      {{monthName}} {{year}}
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Your month in style, {{userName}}
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      Here's a look at your style journey this past month. We've crunched the numbers to help you understand your fashion patterns.
+    </p>
+
+    <!-- Key Stats -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 8px; margin: 0 0 24px 0;">
+      <tr>
+        <td style="width: 33.33%; text-align: center; padding: 20px 8px; background-color: #faf5ff; border-radius: 12px;">
+          <p style="font-size: 36px; font-weight: 700; color: #8B5CF6; margin: 0;">{{stats.outfitsCreated}}</p>
+          <p style="font-size: 12px; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.5px; margin: 4px 0 0 0;">Outfits Created</p>
+        </td>
+        <td style="width: 33.33%; text-align: center; padding: 20px 8px; background-color: #fdf4ff; border-radius: 12px;">
+          <p style="font-size: 36px; font-weight: 700; color: #c026d3; margin: 0;">{{stats.favoritesSaved}}</p>
+          <p style="font-size: 12px; color: #a21caf; text-transform: uppercase; letter-spacing: 0.5px; margin: 4px 0 0 0;">Favorites Saved</p>
+        </td>
+        <td style="width: 33.33%; text-align: center; padding: 20px 8px; background-color: #f0fdf4; border-radius: 12px;">
+          <p style="font-size: 36px; font-weight: 700; color: #16a34a; margin: 0;">{{stats.itemsAdded}}</p>
+          <p style="font-size: 12px; color: #15803d; text-transform: uppercase; letter-spacing: 0.5px; margin: 4px 0 0 0;">Items Added</p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Most Worn Items -->
+    <div style="background-color: #f9fafb; border-radius: 16px; padding: 20px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #374151; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 16px 0;">
+        &#11088; Your Most Worn Items
+      </p>
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          {{#each mostWornItems}}
+          <td style="width: 25%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 100%; max-width: 80px; height: auto; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 18px; font-weight: 700; color: #8B5CF6; margin: 8px 0 0 0;">{{this.wearCount}}x</p>
+            <p style="font-size: 11px; color: #6b7280; margin: 2px 0 0 0;">{{this.category}}</p>
+          </td>
+          {{/each}}
+        </tr>
+      </table>
+    </div>
+
+    <!-- Color Palette -->
+    <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; padding: 20px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 16px 0;">
+        &#127912; Your Color Palette This Month
+      </p>
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          {{#each topColors}}
+          <td style="width: 20%; text-align: center; padding: 8px;">
+            <div style="width: 50px; height: 50px; background-color: {{this.hex}}; border-radius: 50%; margin: 0 auto 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);"></div>
+            <p style="font-size: 12px; color: #6b7280; margin: 0;">{{this.name}}</p>
+            <p style="font-size: 11px; color: #9ca3af; margin: 2px 0 0 0;">{{this.percentage}}%</p>
+          </td>
+          {{/each}}
+        </tr>
+      </table>
+    </div>
+
+    <!-- Style Insights -->
+    <p style="font-size: 16px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Your Style Insights
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin: 0 0 24px 0;">
+      {{#each insights}}
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px; margin-bottom: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 32px; vertical-align: top; padding-top: 2px;">
+                <span style="font-size: 18px;">{{this.icon}}</span>
+              </td>
+              <td>
+                <p style="font-size: 15px; color: #374151; margin: 0;">{{this.text}}</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td style="height: 8px;"></td></tr>
+      {{/each}}
+    </table>
+
+    <!-- Wardrobe Summary -->
+    <div class="highlight-box" style="background-color: #eff6ff; border-radius: 12px; padding: 16px 20px; margin: 0 0 24px 0; border-left: 4px solid #3b82f6;">
+      <p style="font-size: 14px; font-weight: 600; color: #1e40af; margin: 0 0 8px 0;">
+        &#128202; Wardrobe Overview
+      </p>
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          <td style="padding: 4px 0; font-size: 14px; color: #1e3a8a;">
+            Total items: <strong>{{wardrobeStats.totalItems}}</strong>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 4px 0; font-size: 14px; color: #1e3a8a;">
+            Items worn this month: <strong>{{wardrobeStats.itemsWorn}}</strong> ({{wardrobeStats.wornPercentage}}%)
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 4px 0; font-size: 14px; color: #1e3a8a;">
+            Never worn: <strong>{{wardrobeStats.neverWorn}}</strong> items
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Next Month Goal -->
+    {{#if nextMonthGoal}}
+    <div style="background-color: #fef3c7; border-radius: 12px; padding: 16px; margin: 0 0 24px 0; text-align: center;">
+      <p style="font-size: 14px; font-weight: 600; color: #92400e; margin: 0 0 4px 0;">
+        &#127919; Challenge for {{nextMonthName}}
+      </p>
+      <p style="font-size: 15px; color: #b45309; margin: 0;">
+        {{nextMonthGoal}}
+      </p>
+    </div>
+    {{/if}}
+
+    <!-- CTA -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/profile/style" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            View Full Style Profile
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/outfit" class="secondary-button" style="display: inline-block; background-color: #f3f4f6; color: #4b5563; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 8px; text-decoration: none;">
+            Create New Outfit
+          </a>
+        </td>
+      </tr>
+    </table>
+
+  </td>
+</tr>

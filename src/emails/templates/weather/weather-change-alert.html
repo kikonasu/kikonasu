@@ -1,0 +1,130 @@
+<!--
+  TRIGGER: weather_change_alert
+  WHEN: When forecast changes significantly (15°+ swing, rain/snow incoming)
+  FREQUENCY: As needed (max 1 per day)
+  SUBJECT: "Weather alert: {{changeType}} on {{affectedDate}}"
+  PREVIEW: "Your planned outfit might need adjusting"
+-->
+
+<!-- Alert Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, {{alertColor}} 0%, {{alertColorDark}} 100%); padding: 20px 24px; text-align: center;">
+    <p style="font-size: 32px; margin: 0 0 8px 0;">{{alertIcon}}</p>
+    <p style="font-size: 16px; font-weight: 600; color: #ffffff; margin: 0;">
+      Weather Change Alert
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Heads up, {{userName}}!
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      The weather forecast for <strong>{{affectedDate}}</strong> has changed significantly. You might want to adjust your outfit plans.
+    </p>
+
+    <!-- Before/After Weather Comparison -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin: 0 0 24px 0;">
+      <tr>
+        <td style="width: 48%; background-color: #fee2e2; border-radius: 12px; padding: 16px; text-align: center; vertical-align: top;">
+          <p style="font-size: 12px; font-weight: 600; color: #991b1b; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">
+            Was Expected
+          </p>
+          <p style="font-size: 36px; margin: 0;">{{previousWeather.icon}}</p>
+          <p style="font-size: 24px; font-weight: 700; color: #991b1b; margin: 8px 0 0 0;">{{previousWeather.temp}}°</p>
+          <p style="font-size: 13px; color: #b91c1c; margin: 4px 0 0 0;">{{previousWeather.condition}}</p>
+        </td>
+        <td style="width: 4%; text-align: center; vertical-align: middle;">
+          <span style="font-size: 24px; color: #9ca3af;">&#8594;</span>
+        </td>
+        <td style="width: 48%; background-color: #dbeafe; border-radius: 12px; padding: 16px; text-align: center; vertical-align: top;">
+          <p style="font-size: 12px; font-weight: 600; color: #1e40af; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0;">
+            Now Expected
+          </p>
+          <p style="font-size: 36px; margin: 0;">{{newWeather.icon}}</p>
+          <p style="font-size: 24px; font-weight: 700; color: #1e40af; margin: 8px 0 0 0;">{{newWeather.temp}}°</p>
+          <p style="font-size: 13px; color: #1d4ed8; margin: 4px 0 0 0;">{{newWeather.condition}}</p>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Impact on Planned Outfit -->
+    {{#if hasPlannedOutfit}}
+    <div style="background-color: #fef3c7; border-radius: 12px; padding: 16px; margin: 0 0 24px 0; border-left: 4px solid #f59e0b;">
+      <p style="font-size: 14px; font-weight: 600; color: #92400e; margin: 0 0 8px 0;">
+        Your planned outfit may not work
+      </p>
+      <p style="font-size: 14px; color: #b45309; margin: 0 0 12px 0;">
+        You have an outfit planned for this day that was based on the old forecast.
+      </p>
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          {{#each plannedOutfit.items}}
+          <td style="width: 33.33%; padding: 4px; text-align: center;">
+            <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 100%; max-width: 60px; height: auto; border-radius: 8px; opacity: 0.7;">
+          </td>
+          {{/each}}
+        </tr>
+      </table>
+    </div>
+    {{/if}}
+
+    <!-- Suggestions -->
+    <p style="font-size: 16px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      What to consider:
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin: 0 0 24px 0;">
+      {{#each suggestions}}
+      <tr>
+        <td style="padding: 8px 0; font-size: 15px; color: #4a4a4a;">
+          <span style="color: #8B5CF6; margin-right: 8px;">&#8226;</span> {{this}}
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+
+    <!-- Recommended Items from Wardrobe -->
+    {{#if recommendedItems}}
+    <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; padding: 20px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #7c3aed; margin: 0 0 12px 0;">
+        Items from your wardrobe for this weather:
+      </p>
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          {{#each recommendedItems}}
+          <td style="width: 25%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 100%; max-width: 70px; height: auto; border-radius: 8px;">
+            <p style="font-size: 11px; color: #6b7280; margin: 4px 0 0 0;">{{this.category}}</p>
+          </td>
+          {{/each}}
+        </tr>
+      </table>
+    </div>
+    {{/if}}
+
+    <!-- CTA -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          {{#if hasPlannedOutfit}}
+          <a href="{{appUrl}}/suitcase/{{planId}}?day={{dayNumber}}&change=true" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            Change My Outfit
+          </a>
+          {{else}}
+          <a href="{{appUrl}}/outfit" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            Plan an Outfit
+          </a>
+          {{/if}}
+        </td>
+      </tr>
+    </table>
+
+  </td>
+</tr>

@@ -1,0 +1,191 @@
+<!--
+  TRIGGER: user_inactive_14days
+  WHEN: 14 days of no activity
+  FREQUENCY: Once per inactivity period
+  SUBJECT: "Still there, {{userName}}? Here's what's new"
+  PREVIEW: "Life gets busy - your wardrobe is still ready when you are"
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Here's What's New</title>
+  <!--[if mso]>
+  <style type="text/css">
+    table { border-collapse: collapse; }
+    .fallback-font { font-family: Arial, sans-serif !important; }
+  </style>
+  <![endif]-->
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+
+  <!-- Email Container -->
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8fafc;">
+    <tr>
+      <td align="center" style="padding: 40px 16px;">
+
+        <!-- Email Card -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 520px; background-color: #ffffff; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); overflow: hidden;">
+
+          <!-- Header -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #e0e7ff 100%); padding: 40px 32px 32px 32px; text-align: center;">
+
+              <!-- Logo -->
+              <img src="{{logoUrl}}" alt="Kikonasu" width="48" height="48" style="display: block; margin: 0 auto 24px auto; border-radius: 12px;">
+
+              <!-- Sparkles Emoji -->
+              <div style="font-size: 48px; margin-bottom: 16px;">
+                <span>💫</span>
+              </div>
+
+              <h1 style="font-size: 28px; font-weight: 700; color: #1e1b4b; margin: 0 0 8px 0; line-height: 1.2;">
+                Still there, {{userName}}?
+              </h1>
+              <p style="font-size: 16px; color: #6b7280; margin: 0; line-height: 1.5;">
+                Life gets busy - we totally get it
+              </p>
+            </td>
+          </tr>
+
+          <!-- Main Content -->
+          <tr>
+            <td style="padding: 32px;">
+
+              <p style="font-size: 16px; line-height: 1.6; color: #374151; margin: 0 0 24px 0;">
+                It's been a couple of weeks, but your wardrobe is still here, ready when you are. In case you forgot what you can do:
+              </p>
+
+              <!-- Features Grid -->
+              <div style="margin: 0 0 24px 0;">
+
+                <!-- Feature 1: Capsule Wardrobes -->
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 12px;">
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #fdf4ff 0%, #fae8ff 100%); border-radius: 12px; padding: 16px;">
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td width="48" valign="top">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #d946ef 0%, #a855f7 100%); border-radius: 10px; text-align: center; line-height: 40px;">
+                              <span style="font-size: 20px;">👗</span>
+                            </div>
+                          </td>
+                          <td style="padding-left: 12px;">
+                            <p style="font-size: 15px; font-weight: 600; color: #1e1b4b; margin: 0 0 4px 0;">Capsule Wardrobes</p>
+                            <p style="font-size: 14px; color: #6b7280; margin: 0;">Build curated mini collections for any occasion</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Feature 2: Trip Planning -->
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 12px;">
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-radius: 12px; padding: 16px;">
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td width="48" valign="top">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 10px; text-align: center; line-height: 40px;">
+                              <span style="font-size: 20px;">🧳</span>
+                            </div>
+                          </td>
+                          <td style="padding-left: 12px;">
+                            <p style="font-size: 15px; font-weight: 600; color: #1e1b4b; margin: 0 0 4px 0;">Trip Planning</p>
+                            <p style="font-size: 14px; color: #6b7280; margin: 0;">Pack smart for your next adventure</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Feature 3: Wishlist -->
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="margin-bottom: 12px;">
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); border-radius: 12px; padding: 16px;">
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td width="48" valign="top">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); border-radius: 10px; text-align: center; line-height: 40px;">
+                              <span style="font-size: 20px;">🛍️</span>
+                            </div>
+                          </td>
+                          <td style="padding-left: 12px;">
+                            <p style="font-size: 15px; font-weight: 600; color: #1e1b4b; margin: 0 0 4px 0;">Smart Wishlist</p>
+                            <p style="font-size: 14px; color: #6b7280; margin: 0;">Plan future purchases strategically</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Feature 4: Outfit History -->
+                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 12px; padding: 16px;">
+                      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td width="48" valign="top">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); border-radius: 10px; text-align: center; line-height: 40px;">
+                              <span style="font-size: 20px;">📊</span>
+                            </div>
+                          </td>
+                          <td style="padding-left: 12px;">
+                            <p style="font-size: 15px; font-weight: 600; color: #1e1b4b; margin: 0 0 4px 0;">Outfit History</p>
+                            <p style="font-size: 14px; color: #6b7280; margin: 0;">Track patterns in what you wear</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+              </div>
+
+              <!-- Quick Stats -->
+              <div style="background-color: #f9fafb; border-radius: 12px; padding: 16px; margin-bottom: 24px; text-align: center;">
+                <p style="font-size: 14px; color: #6b7280; margin: 0 0 4px 0;">Your wardrobe at a glance</p>
+                <p style="font-size: 18px; font-weight: 600; color: #1e1b4b; margin: 0;">
+                  {{itemsCount}} items → {{outfitPotential}}+ possible outfits
+                </p>
+              </div>
+
+              <!-- CTA Button -->
+              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                  <td align="center">
+                    <a href="{{appUrl}}" style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 40px; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.4);">
+                      Come Back & Explore
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #f9fafb; padding: 24px 32px; border-top: 1px solid #e5e7eb;">
+              <p style="font-size: 14px; color: #9ca3af; margin: 0 0 4px 0; text-align: center;">
+                Your style is worth the investment.
+              </p>
+              <p style="font-size: 13px; color: #9ca3af; margin: 0; text-align: center;">
+                <a href="{{unsubscribeUrl}}" style="color: #9ca3af; text-decoration: underline;">Unsubscribe</a> from these emails
+              </p>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

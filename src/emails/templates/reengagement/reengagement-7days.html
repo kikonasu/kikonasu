@@ -1,0 +1,139 @@
+<!--
+  TRIGGER: reengagement_7days
+  WHEN: 7 days since last app visit
+  FREQUENCY: Once per inactivity period
+  SUBJECT: "Your wardrobe misses you, {{userName}}"
+  PREVIEW: "Quick outfit ideas waiting for you"
+-->
+
+<!-- Gentle Reminder Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 50%, #D946EF 100%); padding: 32px 24px; text-align: center;">
+    <p style="font-size: 48px; margin: 0 0 8px 0;">&#128139;</p>
+    <p style="font-size: 20px; font-weight: 600; color: #ffffff; margin: 0;">
+      We Miss You!
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Hey {{userName}}, it's been a week!
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      Your wardrobe is ready and waiting with fresh outfit ideas. Here's what you might have missed:
+    </p>
+
+    <!-- What's New/Waiting -->
+    <div style="background-color: #f9fafb; border-radius: 16px; padding: 20px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #374151; margin: 0 0 16px 0;">
+        &#10024; Your Wardrobe at a Glance
+      </p>
+
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+            <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+              <tr>
+                <td style="width: 40px;">
+                  <span style="font-size: 24px;">&#128090;</span>
+                </td>
+                <td>
+                  <p style="font-size: 15px; color: #374151; margin: 0;"><strong>{{wardrobeCount}}</strong> items in your wardrobe</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 0; border-bottom: 1px solid #e5e7eb;">
+            <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+              <tr>
+                <td style="width: 40px;">
+                  <span style="font-size: 24px;">&#10024;</span>
+                </td>
+                <td>
+                  <p style="font-size: 15px; color: #374151; margin: 0;"><strong>{{possibleOutfits}}</strong> possible outfit combinations</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 0;">
+            <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+              <tr>
+                <td style="width: 40px;">
+                  <span style="font-size: 24px;">&#11088;</span>
+                </td>
+                <td>
+                  <p style="font-size: 15px; color: #374151; margin: 0;"><strong>{{favoritesCount}}</strong> saved favorites</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Quick Outfit Suggestion -->
+    {{#if quickOutfit}}
+    <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; padding: 20px; margin: 0 0 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #7c3aed; margin: 0 0 12px 0; text-align: center;">
+        Today's Quick Pick
+      </p>
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          {{#each quickOutfit.items}}
+          <td style="width: 33.33%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{this.imageUrl}}" alt="{{this.category}}" style="width: 100%; max-width: 90px; height: auto; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <p style="font-size: 11px; color: #6b7280; text-transform: uppercase; margin: 8px 0 0 0;">{{this.category}}</p>
+          </td>
+          {{/each}}
+        </tr>
+      </table>
+    </div>
+    {{/if}}
+
+    <!-- Weather Context -->
+    {{#if currentWeather}}
+    <div class="highlight-box" style="background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%); border-radius: 12px; padding: 16px 20px; margin: 0 0 24px 0; border-left: 4px solid #06b6d4;">
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          <td style="width: 50px; vertical-align: middle;">
+            <span style="font-size: 32px;">{{currentWeather.icon}}</span>
+          </td>
+          <td style="vertical-align: middle; padding-left: 12px;">
+            <p style="font-size: 14px; font-weight: 600; color: #0e7490; margin: 0;">Today in {{location}}</p>
+            <p style="font-size: 16px; color: #155e75; margin: 4px 0 0 0;">{{currentWeather.temp}}° and {{currentWeather.condition}}</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+    {{/if}}
+
+    <!-- CTA -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/outfit" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            Generate Today's Outfit
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/wardrobe" class="secondary-button" style="display: inline-block; background-color: #f3f4f6; color: #4b5563; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 8px; text-decoration: none;">
+            Browse My Wardrobe
+          </a>
+        </td>
+      </tr>
+    </table>
+
+  </td>
+</tr>

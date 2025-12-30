@@ -1,0 +1,141 @@
+<!--
+  TRIGGER: trip_tomorrow
+  WHEN: 1 day before trip start date (evening, ~6pm local time)
+  FREQUENCY: Once per trip
+  SUBJECT: "Tomorrow's the day! Here's your Day 1 outfit for {{destination}}"
+  PREVIEW: "Your {{tripName}} adventure begins tomorrow"
+-->
+
+<!-- Excitement Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 20px 24px; text-align: center;">
+    <p style="font-size: 28px; margin: 0 0 4px 0;">&#9992;</p>
+    <p style="font-size: 18px; font-weight: 600; color: #ffffff; margin: 0;">
+      Tomorrow's the Day!
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Excited yet, {{userName}}?
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      Your trip to <strong>{{destination}}</strong> starts tomorrow! Here's your planned outfit for <strong>Day 1</strong> so you can pack it on top or lay it out tonight.
+    </p>
+
+    <!-- Day 1 Outfit Display -->
+    <div style="background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%); border-radius: 16px; padding: 24px; margin: 24px 0;">
+      <p style="font-size: 14px; font-weight: 600; color: #7c3aed; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px 0; text-align: center;">
+        Day 1 - {{day1Date}}
+      </p>
+      {{#if day1Occasion}}
+      <p style="font-size: 14px; color: #6b7280; margin: 0 0 16px 0; text-align: center;">
+        {{day1Occasion}}
+      </p>
+      {{/if}}
+
+      <!-- Outfit Grid -->
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          {{#if day1Outfit.top}}
+          <td style="width: 33.33%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{day1Outfit.top.imageUrl}}" alt="Top" style="width: 100%; max-width: 120px; height: auto; border-radius: 12px; margin-bottom: 8px;">
+            <p style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Top</p>
+          </td>
+          {{/if}}
+          {{#if day1Outfit.bottom}}
+          <td style="width: 33.33%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{day1Outfit.bottom.imageUrl}}" alt="Bottom" style="width: 100%; max-width: 120px; height: auto; border-radius: 12px; margin-bottom: 8px;">
+            <p style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Bottom</p>
+          </td>
+          {{/if}}
+          {{#if day1Outfit.shoes}}
+          <td style="width: 33.33%; padding: 8px; text-align: center; vertical-align: top;">
+            <img src="{{day1Outfit.shoes.imageUrl}}" alt="Shoes" style="width: 100%; max-width: 120px; height: auto; border-radius: 12px; margin-bottom: 8px;">
+            <p style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Shoes</p>
+          </td>
+          {{/if}}
+        </tr>
+        {{#if day1Outfit.outerwear}}
+        <tr>
+          <td colspan="3" style="padding: 16px 8px 8px 8px; text-align: center;">
+            <img src="{{day1Outfit.outerwear.imageUrl}}" alt="Outerwear" style="width: 100%; max-width: 120px; height: auto; border-radius: 12px; margin-bottom: 8px;">
+            <p style="font-size: 12px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px; margin: 0;">Outerwear</p>
+          </td>
+        </tr>
+        {{/if}}
+      </table>
+    </div>
+
+    <!-- Weather for Day 1 -->
+    <div class="weather-widget" style="background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%); border-radius: 12px; padding: 16px 20px; margin: 24px 0;">
+      <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+        <tr>
+          <td style="width: 60px; vertical-align: middle;">
+            <span style="font-size: 40px;">{{day1Weather.icon}}</span>
+          </td>
+          <td style="vertical-align: middle; padding-left: 16px;">
+            <p style="font-size: 24px; font-weight: 700; color: #0369a1; margin: 0;">{{day1Weather.high}}° / {{day1Weather.low}}°</p>
+            <p style="font-size: 14px; color: #0284c7; margin: 4px 0 0 0;">{{day1Weather.condition}} in {{destination}}</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Quick Tips -->
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 16px 0;">
+      <strong>Pre-trip tips:</strong>
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 8px 0; font-size: 15px; color: #4a4a4a;">
+          <span style="margin-right: 8px;">&#128092;</span> Lay out tomorrow's outfit tonight
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 0; font-size: 15px; color: #4a4a4a;">
+          <span style="margin-right: 8px;">&#128247;</span> Take a photo of your suitcase contents
+        </td>
+      </tr>
+      <tr>
+        <td style="padding: 8px 0; font-size: 15px; color: #4a4a4a;">
+          <span style="margin-right: 8px;">&#128274;</span> Check you have all essentials packed
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTAs -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/suitcase/{{suitcaseId}}" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            View Full Trip Plan
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/suitcase/{{suitcaseId}}?day=1" class="secondary-button" style="display: inline-block; background-color: #f3f4f6; color: #4b5563; font-size: 14px; font-weight: 500; padding: 12px 24px; border-radius: 8px; text-decoration: none;">
+            Change Day 1 Outfit
+          </a>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Divider -->
+    <div style="height: 1px; background-color: #e5e7eb; margin: 32px 0;"></div>
+
+    <!-- Motivational Note -->
+    <p style="font-size: 15px; color: #6b7280; text-align: center; font-style: italic; margin: 0;">
+      Have an amazing trip! We'll send you daily outfit reminders while you're traveling.
+    </p>
+
+  </td>
+</tr>

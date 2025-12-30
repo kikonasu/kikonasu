@@ -1,0 +1,148 @@
+<!--
+  TRIGGER: trip_upcoming_3days
+  WHEN: 3 days before trip start date
+  FREQUENCY: Once per trip
+  SUBJECT: "3 days until {{tripName}}! Final outfit check"
+  PREVIEW: "Make sure your suitcase is ready for {{destination}}"
+-->
+
+<!-- Countdown Banner -->
+<tr>
+  <td style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); padding: 16px 24px; text-align: center;">
+    <p style="font-size: 14px; font-weight: 600; color: #78350f; margin: 0; text-transform: uppercase; letter-spacing: 1px;">
+      3 Days To Go
+    </p>
+  </td>
+</tr>
+
+<!-- Main Content -->
+<tr>
+  <td class="content-section" style="padding: 32px 24px;">
+
+    <!-- Greeting -->
+    <h1 class="greeting" style="font-size: 24px; font-weight: 600; color: #1a1a1a; margin: 0 0 16px 0;">
+      Final countdown, {{userName}}!
+    </h1>
+
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 24px 0;">
+      Your trip to <strong>{{destination}}</strong> is almost here! Let's make sure you've got everything planned.
+    </p>
+
+    <!-- Status Check -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin-bottom: 24px;">
+      {{#if allDaysPlanned}}
+      <tr>
+        <td style="background-color: #d1fae5; border-radius: 12px; padding: 16px 20px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 40px; vertical-align: middle;">
+                <span style="font-size: 24px;">&#10003;</span>
+              </td>
+              <td style="vertical-align: middle;">
+                <p style="font-size: 16px; font-weight: 600; color: #065f46; margin: 0;">All {{tripDuration}} days planned!</p>
+                <p style="font-size: 14px; color: #047857; margin: 4px 0 0 0;">You're all set for your trip</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      {{else}}
+      <tr>
+        <td style="background-color: #fef3c7; border-radius: 12px; padding: 16px 20px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 40px; vertical-align: middle;">
+                <span style="font-size: 24px;">&#9888;</span>
+              </td>
+              <td style="vertical-align: middle;">
+                <p style="font-size: 16px; font-weight: 600; color: #92400e; margin: 0;">{{unplannedDays}} days still need outfits</p>
+                <p style="font-size: 14px; color: #b45309; margin: 4px 0 0 0;">Let's finish planning before you go!</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      {{/if}}
+    </table>
+
+    <!-- Weather Update -->
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 16px 0;">
+      <strong>Updated weather forecast:</strong>
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin-bottom: 24px;">
+      {{#each weatherForecast}}
+      <tr>
+        <td style="padding: 8px 0; border-bottom: 1px solid #f3f4f6;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 80px; font-size: 14px; font-weight: 500; color: #6b7280;">{{this.date}}</td>
+              <td style="width: 40px; text-align: center;"><span style="font-size: 20px;">{{this.icon}}</span></td>
+              <td style="font-size: 15px; color: #1a1a1a;">{{this.high}}° / {{this.low}}°</td>
+              <td style="text-align: right; font-size: 14px; color: #6b7280;">{{this.condition}}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      {{/each}}
+    </table>
+
+    <!-- Quick Actions -->
+    <p class="body-text" style="font-size: 16px; line-height: 1.6; color: #4a4a4a; margin: 0 0 16px 0;">
+      <strong>Last-minute checklist:</strong>
+    </p>
+
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0; margin-bottom: 24px;">
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px; margin-bottom: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 24px; vertical-align: top; padding-top: 2px;">
+                <span style="color: #d1d5db; font-size: 18px;">&#9744;</span>
+              </td>
+              <td style="font-size: 15px; color: #374151;">Check weather hasn't changed drastically</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td style="height: 8px;"></td></tr>
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 24px; vertical-align: top; padding-top: 2px;">
+                <span style="color: #d1d5db; font-size: 18px;">&#9744;</span>
+              </td>
+              <td style="font-size: 15px; color: #374151;">Review planned outfits for each day</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr><td style="height: 8px;"></td></tr>
+      <tr>
+        <td style="padding: 12px 16px; background-color: #f9fafb; border-radius: 8px;">
+          <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+            <tr>
+              <td style="width: 24px; vertical-align: top; padding-top: 2px;">
+                <span style="color: #d1d5db; font-size: 18px;">&#9744;</span>
+              </td>
+              <td style="font-size: 15px; color: #374151;">Swap any outfits if plans have changed</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <!-- CTA -->
+    <table role="presentation" style="width: 100%; border: none; border-spacing: 0;">
+      <tr>
+        <td align="center" style="padding: 8px 0;">
+          <a href="{{appUrl}}/suitcase/{{suitcaseId}}" class="cta-button" style="display: inline-block; background: linear-gradient(135deg, #8B5CF6 0%, #A855F7 100%); color: #ffffff; font-size: 16px; font-weight: 600; padding: 16px 32px; border-radius: 12px; text-decoration: none;">
+            Review My Suitcase
+          </a>
+        </td>
+      </tr>
+    </table>
+
+  </td>
+</tr>
