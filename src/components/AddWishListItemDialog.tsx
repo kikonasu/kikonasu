@@ -78,6 +78,33 @@ export const AddWishListItemDialog = ({ open, onOpenChange, onItemAdded }: AddWi
     setRotation((prev) => (prev + 90) % 360);
   };
 
+  // Resize image to max dimensions while maintaining aspect ratio
+  const resizeImage = async (file: File, maxWidth: number = 1200, maxHeight: number = 1200): Promise<Blob> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+
+        // Only resize if image is larger than max dimensions
+        if (width > maxWidth || height > maxHeight) {
+          const ratio = Math.min(maxWidth / width, maxHeight / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob((blob) => resolve(blob!), "image/jpeg", 0.85);
+      };
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
   const rotateImage = async (file: File, degrees: number): Promise<Blob> => {
     return new Promise((resolve) => {
       const img = new Image();
@@ -97,7 +124,7 @@ export const AddWishListItemDialog = ({ open, onOpenChange, onItemAdded }: AddWi
         ctx.rotate((degrees * Math.PI) / 180);
         ctx.drawImage(img, -img.width / 2, -img.height / 2);
 
-        canvas.toBlob((blob) => resolve(blob!), "image/jpeg", 0.9);
+        canvas.toBlob((blob) => resolve(blob!), "image/jpeg", 0.85);
       };
       img.src = URL.createObjectURL(file);
     });
@@ -114,14 +141,17 @@ export const AddWishListItemDialog = ({ open, onOpenChange, onItemAdded }: AddWi
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
 
-      let fileToUpload = selectedFile;
+      // First resize the image to reduce file size
+      const resizedBlob = await resizeImage(selectedFile);
+      let fileToUpload = new File([resizedBlob], selectedFile.name, { type: "image/jpeg" });
+
+      // Then apply rotation if needed
       if (rotation !== 0) {
-        const rotatedBlob = await rotateImage(selectedFile, rotation);
+        const rotatedBlob = await rotateImage(fileToUpload, rotation);
         fileToUpload = new File([rotatedBlob], selectedFile.name, { type: "image/jpeg" });
       }
 
-      const fileExt = fileToUpload.name.split(".").pop();
-      const fileName = `${user.id}/${Date.now()}.${fileExt}`;
+      const fileName = `${user.id}/${Date.now()}.jpg`;
 
       const { error: uploadError } = await supabase.storage
         .from("wardrobe-images")

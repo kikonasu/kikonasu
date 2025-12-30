@@ -5,8 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/useTheme";
 import Landing from "./pages/Landing";
-import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import Home from "./pages/Home";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
@@ -25,25 +23,9 @@ import StyleProfile from "./pages/StyleProfile";
 
 const queryClient = new QueryClient();
 
-// Root redirect component - redirects based on auth status
+// Root redirect component - always redirects to /home
 const RootRedirect = () => {
-  const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      setIsAuthenticated(!!session);
-      setLoading(false);
-    };
-    checkAuth();
-  }, []);
-
-  if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
-  }
-
-  return <Navigate to={isAuthenticated ? "/home" : "/auth"} replace />;
+  return <Navigate to="/home" replace />;
 };
 
 const App = () => (

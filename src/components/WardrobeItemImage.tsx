@@ -227,6 +227,8 @@ export const WardrobeItemImage = ({
         <img
           src={getSmartPlaceholder(category, description)}
           alt={category}
+          loading="lazy"
+          decoding="async"
           className={`${className} object-cover opacity-60 border border-border/50`}
         />
         {showReuploadButton && itemId && onReupload && (
@@ -266,6 +268,8 @@ export const WardrobeItemImage = ({
       <img
         src={displayUrl}
         alt={category}
+        loading="lazy"
+        decoding="async"
         onLoad={handleImageLoad}
         onError={handleImageError}
         className={`${className} ${imageLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500 border border-border/50`}
