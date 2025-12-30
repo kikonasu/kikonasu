@@ -1424,6 +1424,7 @@ const OutfitItemCard = ({ item, category, locked, onToggleLock, onSelect }: Outf
           itemId={item.id}
           className="w-full h-full object-cover"
           isWishListItem={item.isWishListItem}
+          useThumbnail={true}
         />
       </div>
       <Button

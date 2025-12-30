@@ -14,7 +14,21 @@ interface WardrobeItemImageProps {
   className?: string;
   showReuploadButton?: boolean;
   isWishListItem?: boolean;
+  useThumbnail?: boolean; // Use thumbnail version for grid views (faster loading)
 }
+
+// Helper to derive thumbnail path from original image path
+const getThumbnailPath = (imagePath: string): string => {
+  // Convert "user_id/1234567890.jpg" to "user_id/thumb_1234567890.webp"
+  const parts = imagePath.split('/');
+  if (parts.length < 2) return imagePath;
+
+  const filename = parts[parts.length - 1];
+  const nameWithoutExt = filename.replace(/\.[^.]+$/, '');
+  const thumbFilename = `thumb_${nameWithoutExt}.webp`;
+
+  return [...parts.slice(0, -1), thumbFilename].join('/');
+};
 
 const getCategoryEmoji = (category: string): string => {
   const emojiMap: Record<string, string> = {
@@ -130,12 +144,14 @@ export const WardrobeItemImage = ({
   className = "",
   showReuploadButton = false,
   isWishListItem = false,
+  useThumbnail = false,
 }: WardrobeItemImageProps) => {
   const [displayUrl, setDisplayUrl] = useState<string>("");
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [retryCount, setRetryCount] = useState(0);
+  const [usingFallback, setUsingFallback] = useState(false);
 
   useEffect(() => {
     // If displayUrl is provided, use it directly (skip generation)
@@ -149,6 +165,7 @@ export const WardrobeItemImage = ({
       setLoading(true);
       setImageError(false);
       setImageLoaded(false);
+      setUsingFallback(false);
 
       try {
         // Check if it's already a full URL
@@ -158,25 +175,43 @@ export const WardrobeItemImage = ({
           return;
         }
 
-        // It's a storage path, need to generate signed URL
-        const { data, error } = await supabase.storage
+        // Determine which path to use (thumbnail or original)
+        const pathToLoad = useThumbnail ? getThumbnailPath(imageUrl) : imageUrl;
+
+        // Try to get the image URL (use public URL for better caching)
+        const { data } = supabase.storage
           .from('wardrobe-images')
-          .createSignedUrl(imageUrl, 86400); // 24 hour expiry
+          .getPublicUrl(pathToLoad);
 
-        if (error) throw error;
-        if (!data?.signedUrl) throw new Error('No signed URL returned');
-
-        setDisplayUrl(data.signedUrl);
+        if (data?.publicUrl) {
+          setDisplayUrl(data.publicUrl);
+        } else {
+          throw new Error('No public URL returned');
+        }
       } catch (error) {
-        setImageError(true);
-        setDisplayUrl('');
+        // If thumbnail fails, fall back to original
+        if (useThumbnail && !usingFallback) {
+          setUsingFallback(true);
+          const { data } = supabase.storage
+            .from('wardrobe-images')
+            .getPublicUrl(imageUrl);
+          if (data?.publicUrl) {
+            setDisplayUrl(data.publicUrl);
+          } else {
+            setImageError(true);
+            setDisplayUrl('');
+          }
+        } else {
+          setImageError(true);
+          setDisplayUrl('');
+        }
       } finally {
         setLoading(false);
       }
     };
 
     loadImage();
-  }, [preGeneratedUrl, imageUrl, itemId, category]);
+  }, [preGeneratedUrl, imageUrl, itemId, category, useThumbnail]);
 
   const handleImageLoad = () => {
     setImageLoaded(true);

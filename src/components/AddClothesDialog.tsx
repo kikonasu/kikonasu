@@ -82,7 +82,13 @@ export const AddClothesDialog = ({ open, onOpenChange, onItemAdded, prefilledCat
   };
 
   // Resize image to max dimensions while maintaining aspect ratio
-  const resizeImage = async (file: File, maxWidth: number = 1200, maxHeight: number = 1200): Promise<Blob> => {
+  const resizeImage = async (
+    file: File,
+    maxWidth: number = 1200,
+    maxHeight: number = 1200,
+    format: 'jpeg' | 'webp' = 'jpeg',
+    quality: number = 0.85
+  ): Promise<Blob> => {
     return new Promise((resolve) => {
       const img = new Image();
       img.onload = () => {
@@ -102,10 +108,15 @@ export const AddClothesDialog = ({ open, onOpenChange, onItemAdded, prefilledCat
         const ctx = canvas.getContext("2d")!;
         ctx.drawImage(img, 0, 0, width, height);
 
-        canvas.toBlob((blob) => resolve(blob!), "image/jpeg", 0.85);
+        canvas.toBlob((blob) => resolve(blob!), `image/${format}`, quality);
       };
       img.src = URL.createObjectURL(file);
     });
+  };
+
+  // Generate thumbnail (400px width, WebP format for better compression)
+  const generateThumbnail = async (file: File): Promise<Blob> => {
+    return resizeImage(file, 400, 400, 'webp', 0.80);
   };
 
   const rotateImage = async (file: File, degrees: number): Promise<Blob> => {
@@ -149,23 +160,38 @@ export const AddClothesDialog = ({ open, onOpenChange, onItemAdded, prefilledCat
       const resizedBlob = await resizeImage(selectedFile);
       let fileToUpload = new File([resizedBlob], selectedFile.name, { type: "image/jpeg" });
 
+      // Generate thumbnail for grid views (400px WebP)
+      console.log('🖼️ Generating thumbnail...');
+      const thumbnailBlob = await generateThumbnail(selectedFile);
+
       // Then apply rotation if needed
       if (rotation !== 0) {
         const rotatedBlob = await rotateImage(fileToUpload, rotation);
         fileToUpload = new File([rotatedBlob], selectedFile.name, { type: "image/jpeg" });
       }
 
-      const fileName = `${user.id}/${Date.now()}.jpg`;
+      const timestamp = Date.now();
+      const fileName = `${user.id}/${timestamp}.jpg`;
+      const thumbFileName = `${user.id}/thumb_${timestamp}.webp`;
 
-      console.log('📤 Uploading image:', { fileName, category });
+      console.log('📤 Uploading images:', { fileName, thumbFileName, category });
 
-      const { error: uploadError } = await supabase.storage
-        .from("wardrobe-images")
-        .upload(fileName, fileToUpload);
+      // Upload both original and thumbnail in parallel
+      const [uploadResult, thumbResult] = await Promise.all([
+        supabase.storage.from("wardrobe-images").upload(fileName, fileToUpload),
+        supabase.storage.from("wardrobe-images").upload(thumbFileName, thumbnailBlob, {
+          contentType: 'image/webp'
+        })
+      ]);
 
-      if (uploadError) {
-        console.error('❌ Upload failed:', uploadError);
-        throw uploadError;
+      if (uploadResult.error) {
+        console.error('❌ Upload failed:', uploadResult.error);
+        throw uploadResult.error;
+      }
+
+      if (thumbResult.error) {
+        console.warn('⚠️ Thumbnail upload failed (non-critical):', thumbResult.error);
+        // Continue anyway - thumbnail is optional enhancement
       }
 
       console.log('✓ Upload successful, saving to database');

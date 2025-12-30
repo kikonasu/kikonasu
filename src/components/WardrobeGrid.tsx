@@ -372,6 +372,7 @@ export const WardrobeGrid = ({ onAddClick, onItemsChange, onLoadingChange, refre
               category={item.category}
               itemId={item.id}
               className="w-full h-full object-cover"
+              useThumbnail={true}
             />
             <div className="absolute top-2 left-2 bg-background/80 backdrop-blur-sm px-2 py-1 rounded text-xs font-medium capitalize">
               {item.category}
